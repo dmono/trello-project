@@ -1,0 +1,406 @@
+@import 'whitespace-reset.css'
+@import 'mixins'
+@font-face
+  font-family: 'trellicons'
+  src: url('trellicons.ttf') format('truetype')
+
+body
+  font: normal 14px Helvetica, Arial, sans-serif
+  background: #0079bf
+  overflow-y: auto
+
+#surface
+  display: flex
+  flex-direction: column
+
+body, #surface, html
+  height: 100%
+
+header
+  position: relative
+  width: 100%
+  height: 30px
+  padding: 5px
+  overflow: hidden
+  flex: none
+  z-index: 10
+  background: #026aa7
+  .button
+    icon-button()
+  input[type='text']
+    width: 180px
+    background: none
+    border: none
+  .header-logo
+    display: inline-block
+    width: 130px
+    height: 30px
+    background: url('/images/header-logo.png') no-repeat
+  .user-info
+    position: absolute
+    display: inline-block
+    margin-right: 0px
+    right: 5px
+
+main
+  position: relative
+  overflow-y: auto
+  flex-grow: 1
+  
+.board-wrapper
+  position: absolute
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+  
+.board-content
+  display: flex
+  height: 100%
+  margin-right: 0
+  flex-direction: column
+
+.board-header
+  position: relative
+  height: auto
+  overflow: hidden
+  padding: 8px 4px 8px 8px
+  flex: none
+  .button
+    icon-button()
+    display: inline-block
+    background: transparent
+    &:hover
+      background: #026aa7
+    p
+      font-size: 12px
+      font-weight: normal
+  .board-title
+    font-size: 16px
+    font-weight: 700
+    color: #ffffff
+    text-decoration: none
+  .board-menu
+    position: absolute
+    margin-right: 0px
+    right: 8px
+
+.board-lists
+  position: relative
+  flex-grow: 1
+  
+#board
+  position: absolute
+  padding: 0 0 10px 0
+  margin: 0 0 10px 0
+  overflow-x: auto
+  overflow-y: hidden
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+  white-space: nowrap
+  
+.list-wrapper
+  display: inline-block
+  width: 270px
+  margin: 0 5px
+  height: 100%
+  vertical-align: top
+  box-sizing: border-box
+  &:first-child
+    margin-left: 10px
+  .overlay
+    position: fixed
+    display: none
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    z-index: -1
+
+.list
+  display: flex
+  position: relative
+  padding: 0px 8px
+  max-height: 100%
+  background: #E2E4E6
+  border-radius: 3px
+  box-sizing: border-box
+  flex-direction: column
+  .list-header
+    position: relative
+    padding: 8px 10px
+    min-height: 20px
+    font-weight: 700
+    color: #4d4d4d
+    flex: 0 0 auto
+    .button
+      icon-button()
+      padding: 6px 8px
+      height: 25px
+      line-height: 10px
+      background: transparent
+      &:hover
+        background: #c4c9cc
+    p
+      display: inline-block
+      padding: 6px 0
+  .card-container
+    padding: 0 4px
+    margin: 0 4px
+    min-height: 0
+    z-index: 1
+    overflow-y: auto
+    overlow-x: hidden
+    flex: 1 1 auto
+  
+  .add-new
+    flex: 0 0 auto
+
+.list-placeholder
+  display: inline-block
+  width: 270px
+  margin: 0 5px 0 5px
+  background: #005586
+  border-radius: 3px
+  
+.tilt
+  transform: rotate(3deg)
+  -moz-transform: rotate(3deg)
+  -webkit-transform: rotate(3deg)
+  
+.add-list-placeholder
+  height: 40px
+  padding: 12px 10px 8px 10px
+  background: #026aa7
+  color: #B3CCDB
+  border-radius: 3px
+  box-sizing: border-box
+  cursor: pointer
+  &:hover
+    background: #005586
+    
+.add-list-form
+  display: none
+  padding: 5px
+  input[type='text']
+    width: 100%
+    padding: 5px
+    font-size: 14px
+    color: #4D4D4D
+    background: rgba(0, 0, 0, .05)
+    box-sizing: border-box
+    border-radius: 3px
+    border: 1px solid #aaaaaa
+    //box-shadow: inset 1px 8px rgba(0, 0, 0, .15)
+
+.add-list-controls
+  padding: 4px 0 0 0
+
+form
+  .submit-btn
+    padding: 8px 18px
+    font-size: 14px
+    font-weight: 700
+    border: none
+    border-radius: 3px
+    background: linear-gradient(to bottom, #61bd4f 0, #5aac44 100%)
+    //box-shadow: 0 1px 0 #3f6f21
+    color: #ffffff
+    &:hover
+      background: #539C3B
+  .cancel-btn
+    padding: 8px 5px
+    font-size: 20px
+    &:hover
+      color: #4D4D4D
+
+// icons
+
+.icon-activity
+  &:before
+    content: icons.activity
+
+.icon-plus
+  &:before
+    content: icons.plus
+
+.icon-archive
+  &:before
+    content: icons.archive
+
+.icon-attachment
+  &:before
+    content: icons.attachment
+
+.icon-back
+  &:before
+    content: icons.back
+
+.icon-board
+  &:before
+    content: icons.board
+
+.icon-calendar
+  &:before
+    content: icons.calendar
+
+.icon-camera
+  &:before
+    content: icons.camera
+
+.icon-list
+  &:before
+    content: icons.list
+    
+.icon-card
+  &:before
+    content: icons.card
+
+.icon-check
+  &:before
+    content: icons.check
+
+.icon-checklist
+  &:before
+    content: icons.checklist
+
+.icon-duedate
+  &:before
+    content: icons.duedate
+
+.icon-cancel
+  &:before
+    content: icons.cancel
+
+.icon-comment
+  &:before
+    content: icons.comment
+
+.icon-description
+  &:before
+    content: icons.description
+
+.icon-edit
+  &:before
+    content: icons.edit
+
+.icon-mail
+  &:before
+    content: icons.mail
+
+.icon-emoji
+  &:before
+    content: icons.emoji
+
+.icon-expand
+  &:before
+    content: icons.expand
+
+.icon-filter
+  &:before
+    content: icons.filter
+
+.icon-forward
+  &:before
+    content: icons.forward
+
+.icon-settings
+  &:before
+    content: icons.settings
+
+.icon-info
+  &:before
+    content: icons.info
+
+.icon-label
+  &:before
+    content: icons.label
+
+.icon-member
+  &:before
+    content: icons.member
+
+.icon-mention
+  &:before
+    content: icons.mention
+
+.icon-notification
+  &:before
+    content: icons.notification
+
+.icon-team
+  &:before
+    content: icons.team
+
+.icon-more
+  &:before
+    content: icons.more
+
+.icon-powerup
+  &:before
+    content: icons.powerup
+
+.icon-private
+  &:before
+    content: icons.private
+
+.icon-public
+  &:before
+    content: icons.public
+
+.icon-refresh
+  &:before
+    content: icons.refresh
+
+.icon-search
+  &:before
+    content: icons.search
+
+.icon-upload
+  &:before
+    content: icons.upload
+
+.icon-star
+  &:before
+    content: icons.star
+
+.icon-sticker
+  &:before
+    content: icons.sticker
+
+.icon-subscribe
+  &:before
+    content: icons.subscribe
+
+.icon-open
+  &:before
+    content: icons.open
+
+.icon-close
+  &:before
+    content: icons.close
+
+.icon-thumbup
+  &:before
+    content: icons.thumbup
+
+.icon-large, .icon-small
+  display: inline-block
+  vertical-align: middle
+  font-family: trellicons
+  -webkit-font-smoothing: antialiased
+  font-style: normal
+  font-weight: 400
+  text-align: center
+  color: #999999
+  
+.icon-large
+  font-size: 15px
+  
+.icon-small
+  font-size: 12px
+
+.light
+  color: #ffffff

@@ -14,7 +14,8 @@
     "nib": "^1.1.2",
     "pug": "^2.0.0-beta11",
     "serve-favicon": "~2.3.2",
-    "stylus": "^0.54.5"
+    "stylus": "^0.54.5",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "grunt": "^1.0.1",

@@ -1,7 +1,57 @@
+include /_mixins
+
 doctype html
-html
+html(lang='en-us')
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
+    link(rel='stylesheet', href='https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css')
+    +stylesheet_link_tag('main')
+    +javascript_include_tag('vendor/all')
+    +javascript_include_tag('handlebars_templates')
+
   body
-    block content
+    #surface
+      header
+        a.button(href='#')
+          span(class='icon-large icon-board light')
+          p Boards
+        .header-search(class='button')
+          input(type='text')
+          span(class='icon-large icon-search light')
+        a.header-logo(href='#')
+          | blah
+        .user-info
+          a.button(href='#')
+            span(class='icon-large icon-plus light')
+          a.button(href='#')
+            span(class='icon-large icon-info light')
+          a.button(href='#')
+            span(class='icon-large icon-notification light')
+
+      main
+        .board-wrapper
+          .board-content
+            .board-header
+            .board-lists
+              #board(class='ui-sortable')
+                .list-wrapper(class='add-list')
+                  .overlay
+                  .add-list-placeholder
+                    p Add a list...
+                  form(class='add-list-form list')
+                    input(type='text' name="name" placeholder='Add a list...')
+                    .add-list-controls
+                      input(type='submit' value='Save' class='submit-btn')
+                      a.cancel-btn(href='#')
+                        span(class='icon-large cancel-btn icon-cancel')
+      block content
+
+    +javascript_include_tag('application')
+    +javascript_include_tag('models/board', 'models/list', 'models/card')
+    +javascript_include_tag('collections/lists')
+    +javascript_include_tag('views/board', 'views/list', 'views/lists')
+    +javascript_include_tag('router')
+    script(type='text/javascript').
+      App.init(!{ JSON.stringify(lists) });
+
