@@ -26,20 +26,28 @@ var ListsView = Backbone.View.extend({
     var $formData = $(e.target);
     App.trigger('addList', $formData);
   },
+  updatePositions: function() {
+    this.collection.listPositions = this.$('.sortable-lists').sortable('toArray', { attribute: 'data-id' });
+  },
   makeSortable: function() {
-    this.$el.sortable({
-      cancel: '.add-list',
+    var self = this;
+    this.$('.sortable-lists').sortable({
       placeholder: "list-placeholder",
       handle: ".list-header",
       tolerance: 'pointer',
       containment: 'window',
+      appendTo: 'body',
+      helper: 'clone',
       start: function(e, ui) {
         ui.placeholder.height(ui.item.find('.list').height());
         ui.item.addClass('tilt');
       },
       stop: function(e, ui) {
         ui.item.removeClass('tilt');
-      }
+      },
+      update: function(e, ui) {
+        self.updatePositions();
+      },
     }).disableSelection();
   },
   render: function() {
@@ -50,10 +58,14 @@ var ListsView = Backbone.View.extend({
       model: item,
     });
 
-    this.$('.add-list').before(listView.el)
+    this.$('.sortable-lists').append(listView.el);
+  },
+  renderNewCard: function(listId, model) {
+    this.collection.get(listId).view.cardsView.renderCard(model);
   },
   initialize: function() {
     this.render();
     this.makeSortable();
+    this.collection.view = this;
   },
 });

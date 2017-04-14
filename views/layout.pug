@@ -34,24 +34,26 @@ html(lang='en-us')
           .board-content
             .board-header
             .board-lists
-              #board(class='ui-sortable')
-                .list-wrapper(class='add-list')
-                  .overlay
-                  .add-list-placeholder
-                    p Add a list...
-                  form(class='add-list-form list')
-                    input(type='text' name="name" placeholder='Add a list...')
-                    .add-list-controls
-                      input(type='submit' value='Save' class='submit-btn')
-                      a.cancel-btn(href='#')
-                        span(class='icon-large cancel-btn icon-cancel')
+              #board
+                .sortable-lists
+                .add-list-container
+                  .list-wrapper(class='add-list')
+                    .overlay
+                    .add-list-placeholder
+                      p Add a list...
+                    form(class='add-list-form list' method='post' action='/lists')
+                      input(type='text' name="name" placeholder='Add a list...')
+                      .add-list-controls
+                        input(type='submit' value='Save' class='submit-btn')
+                        a.cancel-btn(href='#')
+                          span(class='icon-large cancel-btn icon-cancel')
       block content
 
     +javascript_include_tag('application')
     +javascript_include_tag('models/board', 'models/list', 'models/card')
-    +javascript_include_tag('collections/lists')
-    +javascript_include_tag('views/board', 'views/list', 'views/lists')
+    +javascript_include_tag('collections/lists', 'collections/cards')
+    +javascript_include_tag('views/board', 'views/list', 'views/lists', 'views/card', 'views/cards')
     +javascript_include_tag('router')
     script(type='text/javascript').
-      App.init(!{ JSON.stringify(lists) });
+      App.init(!{JSON.stringify(lists)}, !{JSON.stringify(cards)});
 
