@@ -15,6 +15,7 @@ var Cards = Backbone.Collection.extend({
       wait: true,
       success: function(model, response) {
         App.trigger('renderNewCard', listId, model);
+        App.trigger('cardMoved', listId)
       },
     });
   },

@@ -1,1 +1,1 @@
-{"lastId":11,"listPositions":[],"data":[{"id":1,"name":"My new list","cardPositions":[]},{"id":2,"name":"The second list","cardPositions":[]},{"name":"Add me","id":3,"cardPositions":[]},{"name":"test","id":4}]}
+{"lastId":3,"data":[{"cardPositions":["1"],"name":"list 1","position":1,"id":1},{"cardPositions":["2"],"name":"list 2","position":2,"id":2},{"cardPositions":["3"],"name":"list 3","position":3,"id":3}]}

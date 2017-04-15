@@ -1,7 +1,7 @@
 var CardView = Backbone.View.extend({
   template: App.templates.card,
   events: {
-    //'click': 'testme',
+    'click': 'displayCardDetails',
   },
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
@@ -10,9 +10,12 @@ var CardView = Backbone.View.extend({
 
     return this.el;
   },
-  testme: function() {
-    console.log(this);
-    console.log(this.model.id);
+  displayCardDetails: function(e) {
+    e.preventDefault();
+
+    var modal = new CardDetailsView({
+      model: this.model,
+    });
   },
   initialize: function() {
     this.model.view = this;

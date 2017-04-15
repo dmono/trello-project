@@ -1,0 +1,108 @@
+<div class="header">
+  <span class="icon-card icon-xlarge modal-header-icon"></span>
+  <a href="#" class="icon-cancel icon-xlarge"></a>
+  <div class="title">
+    <textarea>{{title}}</textarea>
+  </div>
+  <div class="current-list">
+    <p>in list</p>
+    <a href="#">{{listId}}</a>
+    {{#if subscribed}}
+    <span class="icon-subscribe icon-small"></span>
+    {{/if}}
+  </div>
+</div>
+
+<div class="main-content">
+  <div class="card-information">
+    <div class="description">
+      <a href="#" class="empty-description">
+        <span class="icon-description icon-large"></span>
+        Edit the description...
+      </a>
+      <div class="edit-description">
+        <textarea></textarea>
+        <div class="description-controls">
+          <input type="submit" value="Save" class="submit-btn" />
+          <a href="#" class="cancel-btn">
+            <span class="icon-xlarge cancel-btn icon-cancel"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-comments">
+    <div class="comment-header">
+      <span class="icon-comment icon-xlarge"></span>
+      <h3>Add Comments</h3>
+    </div>
+    <div class="new-comment">
+      <span class="icon-member icon-xlarge"></span>
+      <textarea placeholder="Write a comment..." class="comment-bg"></textarea>
+      <div class="comment-controls">
+        <input type="submit" value="Send" class="submit-btn" />
+      </div>
+    </div>
+  </div>
+  <div class="card-activity">
+    <div class="activity-header">
+      <span class="icon-activity icon-xlarge"></span>
+      <h3>Activity</h3>
+    </div>
+    <div class="activity-content">
+      <div class="comment-single">
+        <span class="icon-member icon-xlarge"></span>
+        <div class="comment-content">
+          <h4>Bailey Cat</h4>
+          <div class="comment-text comment-bg">Adding a comment</div>
+          <p>Apr 7 at 11:00 PM</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="sidebar">
+  <div class="add-buttons">
+    <h3>Add</h3>
+    <a href="#" class="modal-button">
+      <span class="icon-member icon-small"></span>
+      Members
+    </a>
+    <a href="#" class="modal-button">
+      <span class="icon-label icon-small"></span>
+      Labels
+    </a>
+    <a href="#" class="modal-button">
+      <span class="icon-checklist icon-small"></span>
+      Checklist
+    </a>
+    <a href="#" class="modal-button">
+      <span class="icon-duedate icon-small"></span>
+      Due Date
+    </a>
+    <a href="#" class="modal-button">
+      <span class="icon-attachment icon-small"></span>
+      Attachment
+    </a>
+  </div>
+  <div class="action-buttons">
+    <h3>Actions</h3>
+    <a href="#" class="modal-button">
+      <span class="icon-forward icon-small"></span>
+      Move
+    </a>
+    <a href="#" class="modal-button">
+      <span class="icon-card icon-small"></span>
+      Copy
+    </a>
+    <a href="#" class="modal-button">
+      <span class="icon-subscribe icon-small"></span>
+      Subscribe
+    </a>
+    <a href="#" class="modal-button">
+      <span class="icon-archive icon-small"></span>
+      Archive
+    </a>
+  </div>
+  <a href="#">Share and more...</a>
+</div>

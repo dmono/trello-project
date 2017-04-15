@@ -16,6 +16,7 @@ var ListsView = Backbone.View.extend({
     e.preventDefault();
 
     if ($('.add-list-form').is(':visible')) {
+      $('.add-list-form').find("input[name='name']").val('');
       $('.add-list-form').hide();
       $('.add-list-placeholder').show();
       this.$('.overlay').hide();
@@ -23,21 +24,42 @@ var ListsView = Backbone.View.extend({
   },
   addNewList: function(e) {
     e.preventDefault();
-    var $formData = $(e.target);
-    App.trigger('addList', $formData);
+    var self = this;
+    var name = $(e.target).find("input[name='name']").val();
+    var newPosition = this.collection.length + 1;
+
+    this.collection.create({
+      name: name,
+      position: newPosition,
+    }, { 
+      wait: true,
+      success: function(list, response) {
+        self.renderList(list);
+        self.$('a.cancel-btn').trigger('click');
+      },
+    });
   },
   updatePositions: function() {
-    this.collection.listPositions = this.$('.sortable-lists').sortable('toArray', { attribute: 'data-id' });
+    var listPositions = this.$el.sortable('toArray', { attribute: 'data-id' });
+    var position;
+
+    this.collection.each(function(list) {
+      position = listPositions.indexOf(String(list.id)) + 1
+      list.save({ position: position });
+      //list.set('position', listPositions.indexOf(String(list.id)) + 1);
+    });
   },
   makeSortable: function() {
     var self = this;
-    this.$('.sortable-lists').sortable({
-      placeholder: "list-placeholder",
-      handle: ".list-header",
+    this.$el.sortable({
+      items: '> div:not(.add-list)',
+      placeholder: 'list-placeholder',
+      handle: '.list-header',
       tolerance: 'pointer',
       containment: 'window',
       appendTo: 'body',
-      helper: 'clone',
+      zIndex: 9999,
+      // helper: 'clone',
       start: function(e, ui) {
         ui.placeholder.height(ui.item.find('.list').height());
         ui.item.addClass('tilt');
@@ -58,7 +80,7 @@ var ListsView = Backbone.View.extend({
       model: item,
     });
 
-    this.$('.sortable-lists').append(listView.el);
+    this.$('.add-list').before(listView.el);
   },
   renderNewCard: function(listId, model) {
     this.collection.get(listId).view.cardsView.renderCard(model);

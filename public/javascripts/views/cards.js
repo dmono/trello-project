@@ -13,19 +13,21 @@ var CardsView = Backbone.View.extend({
     //e.preventDefault();
     $('.new-card-form').filter(':visible').find('textarea').val('');
     $('.new-card-form').filter(':visible').hide();
-    //$(e.target).closest('.new-card-form').hide();
     $('.add-new-card').filter(':hidden').show();
   },
   makeSortable: function() {
     var self = this;
     this.$el.sortable({
+      items: '> div:not(.new-card-form)',
       connectWith: '.cards-container',
       placeholder: 'card-placeholder',
       tolerance: 'pointer',
       containment: 'window',
-      appendTo: 'body',
-      helper: 'clone',
+      zIndex: 9999,
+      // appendTo: 'body',
+      // helper: 'clone',
       start: function(e, ui) {
+        ui.placeholder.width(ui.item.width());
         ui.placeholder.height(ui.item.height());
         ui.item.addClass('tilt');
       },

@@ -35,24 +35,25 @@ html(lang='en-us')
             .board-header
             .board-lists
               #board
-                .sortable-lists
-                .add-list-container
-                  .list-wrapper(class='add-list')
-                    .overlay
-                    .add-list-placeholder
-                      p Add a list...
-                    form(class='add-list-form list' method='post' action='/lists')
-                      input(type='text' name="name" placeholder='Add a list...')
-                      .add-list-controls
-                        input(type='submit' value='Save' class='submit-btn')
-                        a.cancel-btn(href='#')
-                          span(class='icon-large cancel-btn icon-cancel')
+                .list-wrapper(class='add-list')
+                  .overlay
+                  .add-list-placeholder
+                    p Add a list...
+                  form(class='add-list-form list')
+                    input(type='text' name="name" placeholder='Add a list...')
+                    .add-list-controls
+                      input(type='submit' value='Save' class='submit-btn')
+                      a.cancel-btn(href='#')
+                        span(class='icon-large cancel-btn icon-cancel')
+    .modal-overlay
+      .card-details-modal
+
       block content
 
     +javascript_include_tag('application')
     +javascript_include_tag('models/board', 'models/list', 'models/card')
     +javascript_include_tag('collections/lists', 'collections/cards')
-    +javascript_include_tag('views/board', 'views/list', 'views/lists', 'views/card', 'views/cards')
+    +javascript_include_tag('views/board', 'views/list', 'views/lists', 'views/card', 'views/cards', 'views/card_details')
     +javascript_include_tag('router')
     script(type='text/javascript').
       App.init(!{JSON.stringify(lists)}, !{JSON.stringify(cards)});

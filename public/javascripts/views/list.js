@@ -28,7 +28,16 @@ var ListView = Backbone.View.extend({
   },
   getListCards: function() {
     var listId = +this.$el.attr('data-id');
-    return App.cards.where({ listId: listId });
+    var listCards = [];
+
+    this.model.get('cardPositions').forEach(function(id) {
+      listCards.push(App.cards.findWhere({
+        listId: listId,
+        id: +id,
+      }));
+    });
+
+    return listCards;
   },
   initialize: function() {
     this.model.view = this;

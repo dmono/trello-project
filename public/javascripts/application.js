@@ -18,7 +18,6 @@ var App = {
   },
   bindEvents: function() {
     _.extend(this, Backbone.Events);
-    this.on('addList', this.lists.addList.bind(this.lists));
     this.on('cardMoved', this.lists.updateCardPositions.bind(this.lists));
     this.on('changeCardList', this.cards.updateListId.bind(this.cards));
     this.on('addNewCard', this.cards.addCard.bind(this.cards));

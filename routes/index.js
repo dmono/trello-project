@@ -38,6 +38,19 @@ router.route('/lists')
     res.json(_(lists.data).findWhere({ id: lists.lastId }));
   });
 
+router.route('/lists/:id')
+  .put(function(req, res, next) {
+    listsApi.put(req.body);
+    listsApi.record();
+    res.status(200).end();
+  })
+  .delete(function(req, res, next) {
+    const id = req.params.id;
+    listsApi.delete(id);
+    listsApi.record();
+    res.status(200).end();
+  });
+
 router.route('/cards')
   .get(function(req, res, next) {
     res.json(cardsApi.tempStore.data);
