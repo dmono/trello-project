@@ -24,11 +24,17 @@ var App = {
     this.on('renderNewCard', this.lists.view.renderNewCard.bind(this.lists.view));
     // $(window).on('unload', this.saveData.bind(this));
   },
-  init: function(lists, cards) {
+  init: function(lists, cards, comments) {
     this.lists = new Lists(lists);
     this.cards = new Cards(cards);
+    this.comments = new Comments(comments);
     this.router = new Router();
     this.setupRouter();
     this.bindEvents();
   }
 };
+
+Handlebars.registerHelper('formatDateTime', function(dateTime) {
+  var dateObj = moment(dateTime);
+  return dateObj.format('MMM D') + ' at ' + dateObj.format('h:mm A');
+});

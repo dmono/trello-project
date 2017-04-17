@@ -45,16 +45,16 @@ html(lang='en-us')
                       input(type='submit' value='Save' class='submit-btn')
                       a.cancel-btn(href='#')
                         span(class='icon-large cancel-btn icon-cancel')
-    .modal-overlay
-      .card-details-modal
 
+    .modal-overlay
+    .popover
       block content
 
     +javascript_include_tag('application')
-    +javascript_include_tag('models/board', 'models/list', 'models/card')
-    +javascript_include_tag('collections/lists', 'collections/cards')
-    +javascript_include_tag('views/board', 'views/list', 'views/lists', 'views/card', 'views/cards', 'views/card_details')
+    +javascript_include_tag('models/board', 'models/list', 'models/card', 'models/comment')
+    +javascript_include_tag('collections/lists', 'collections/cards', 'collections/comments')
+    +javascript_include_tag('views/board', 'views/list', 'views/lists', 'views/card', 'views/cards', 'views/card_details', 'views/comment', 'views/labels_popover', 'views/duedate_popover')
     +javascript_include_tag('router')
     script(type='text/javascript').
-      App.init(!{JSON.stringify(lists)}, !{JSON.stringify(cards)});
+      App.init(!{JSON.stringify(lists)}, !{JSON.stringify(cards)}, !{JSON.stringify(comments)});
 

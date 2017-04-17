@@ -2,6 +2,16 @@ var ListView = Backbone.View.extend({
   template: App.templates.list,
   events: {
     'click .add-new-card': 'displayAddCardForm',
+    'blur .list-name textarea': 'updateName',
+  },
+  updateName: function(e) {
+    var text = $(e.target).val();
+
+    if (text) {
+      this.model.save({ name: text });
+    }
+
+    this.$('.header-draggable').show();
   },
   displayAddCardForm: function(e) {
     e.preventDefault();

@@ -34,7 +34,6 @@ var ListsView = Backbone.View.extend({
     }, { 
       wait: true,
       success: function(list, response) {
-        self.renderList(list);
         self.$('a.cancel-btn').trigger('click');
       },
     });
@@ -46,7 +45,6 @@ var ListsView = Backbone.View.extend({
     this.collection.each(function(list) {
       position = listPositions.indexOf(String(list.id)) + 1
       list.save({ position: position });
-      //list.set('position', listPositions.indexOf(String(list.id)) + 1);
     });
   },
   makeSortable: function() {
@@ -73,6 +71,7 @@ var ListsView = Backbone.View.extend({
     }).disableSelection();
   },
   render: function() {
+    this.$('.list-wrapper').not('.add-list').remove();
     this.collection.each(this.renderList.bind(this));
   },
   renderList: function(item) {
@@ -89,5 +88,6 @@ var ListsView = Backbone.View.extend({
     this.render();
     this.makeSortable();
     this.collection.view = this;
+    this.listenTo(this.collection, 'add', this.render);
   },
 });
