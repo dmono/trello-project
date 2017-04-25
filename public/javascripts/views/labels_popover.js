@@ -1,44 +1,42 @@
-var LabelsPopoverView = Backbone.View.extend({
-  template: App.templates.labels,
-  events: {
-    'click .label': 'selectLabel',
-    'click .popover-header a': 'close',
+var LabelsPopoverView = PopoverView.extend({
+  events: function() {
+    return _.extend({}, PopoverView.prototype.events, {
+      'click .popover-back': 'viewLabels',
+      'click .edit-label': 'editLabel',
+    });
   },
-  selectLabel: function(e) {
-    var $label = $(e.target);
-    var color = $label.attr('data-color');
-    var currentLabels = this.model.get('labels') || [];
-
-    $label.find('.selected-label').toggle();
-
-    if ($label.find('.selected-label:visible').length > 0) {
-      currentLabels.push(color);
-      this.model.save({ labels: currentLabels })
-    } else {
-      this.model.save({ labels: _.without(currentLabels, color) });
-    }
-  },
-  checkLabels: function() {
-    var currentLabels = this.model.get('labels');
-
-    if (currentLabels) {
-      this.$('.label').each(function() {
-        if (currentLabels.indexOf($(this).attr('data-color')) > -1) {
-          $(this).find('.selected-label').css('display', 'block');
-        }
-      });
-    }
-  },
-  close: function(e) {
+  editLabel: function(e) {
     e.preventDefault();
-    this.remove();
+    var labelId = $(e.currentTarget).attr('data-id');
+
+    this.selectLabelsView.remove();
+    this.editLabelsView = new LabelsEditView({
+      model: this.model,
+      labelId: labelId,
+      parent: this,
+    });
+
+    this.$el.append(this.editLabelsView.el);
+  },
+  viewLabels: function(e) {
+    if (e) { e.preventDefault(); }
+    this.editLabelsView.remove();
+
+    this.selectLabelsView = new LabelsSelectView({
+      model: this.model,
+    });
+
+    this.$el.append(this.selectLabelsView.el);
   },
   render: function() {
-    this.$el.html(this.template());
-    this.checkLabels();
-    this.$el.appendTo('.popover');
+    this.selectLabelsView = new LabelsSelectView({
+      model: this.model,
+    });
+    this.$el.append(this.selectLabelsView.el);
+    this.showPopover();
   },
-  initialize: function() {
-    this.render();
-  }
+  initialize: function(options) {
+    PopoverView.prototype.initialize.call(this, options);
+    this.on('updatedLabel', this.viewLabels.bind(this));
+  },
 });

@@ -1,40 +1,93 @@
 var App = {
   templates: JST,
-  setupRouter: function() {
-    Backbone.history.start({
-      pushState: true,
+  indexView: function() {
+    if (this.cardDetailsView) {
+      this.cardDetailsView.closeModal();
+    }
+    this.renderBoard();
+    this.headerView = new HeaderView();
+    this.bindEvents();
+  },
+  renderBoard: function() {
+    this.boardView = new BoardView({
+      collection: this.lists,
     });
 
-    $(document).on('click', 'a[href^="/"]', function(e) {
-      e.preventDefault();
-      App.router.navigate($(e.currentTarget).attr('href').replace(/^\//, ''), { trigger: true });
+    this.boardView.render();
+  },
+  cardModalView: function(id) {
+    id = Number(id.split('-')[0]);
+
+    if (!this.boardView) {
+      this.indexView();
+    }
+
+    this.cardDetailsView = new CardDetailsView({
+      model: App.cards.get(id),
     });
   },
-  saveData: function() {
-    this.lists.sync('update', this.lists);
-    this.cards.each(function(card) {
-      card.save();
+  search: function(query) {
+    this.searchResults.set('query', query);
+  },
+  displaySearch: function() {
+    this.searchResults = new Filter({ collection: this.cards });
+    this.searchView = new SearchView({
+      model: this.searchResults,
     });
+  },
+  displayLabelsMenu: function(model, offset, height) {
+    this.labelsView = new LabelsPopoverView({
+      model: model,
+      offset: offset,
+      height: height,
+    });
+  },
+  displayDueDateMenu: function(model, offset, height) {
+    this.dueDateView = new DueDatePopoverView({
+      model: model,
+      offset: offset,
+      height: height,
+    });
+  },
+  displayMoveMenu: function(model, offset, height) {
+    this.moveCardView = new MovePopoverView({
+      model: model,
+      offset: offset,
+      height: height,
+    });
+  },
+  closeSearch: function() {
+    this.searchView.close();
   },
   bindEvents: function() {
     _.extend(this, Backbone.Events);
+    // this.listenTo(this.lists, 'change', this.boardView.render);
     this.on('cardMoved', this.lists.updateCardPositions.bind(this.lists));
     this.on('changeCardList', this.cards.updateListId.bind(this.cards));
     this.on('addNewCard', this.cards.addCard.bind(this.cards));
     this.on('renderNewCard', this.lists.view.renderNewCard.bind(this.lists.view));
-    // $(window).on('unload', this.saveData.bind(this));
+    this.on('viewLabels', this.displayLabelsMenu.bind(this));
+    this.on('viewDueDate', this.displayDueDateMenu.bind(this));
+    this.on('viewMoveCard', this.displayMoveMenu.bind(this));
+    this.listenTo(this.headerView, 'openSearch', this.displaySearch);
+    this.listenTo(this.headerView, 'performSearch', this.search);
+    this.listenTo(this.headerView, 'closeSearch', this.closeSearch);
   },
-  init: function(lists, cards, comments) {
-    this.lists = new Lists(lists);
-    this.cards = new Cards(cards);
-    this.comments = new Comments(comments);
-    this.router = new Router();
-    this.setupRouter();
-    this.bindEvents();
+  init: function() {
+    // this.bindEvents();
   }
 };
 
 Handlebars.registerHelper('formatDateTime', function(dateTime) {
   var dateObj = moment(dateTime);
   return dateObj.format('MMM D') + ' at ' + dateObj.format('h:mm A');
+});
+
+Handlebars.registerHelper('formatCardUrl', function(id, title) {
+  var formattedTitle = title.toLowerCase().slice(0, 130).replace(/[^a-z0-9]+/g, '-');
+  if (formattedTitle.slice(-1) === '-') {
+    formattedTitle = formattedTitle.slice(0, formattedTitle.length - 1);
+  }
+
+  return id + '-' + formattedTitle;
 });

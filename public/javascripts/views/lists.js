@@ -78,7 +78,7 @@ var ListsView = Backbone.View.extend({
     var listView = new ListView({
       model: item,
     });
-
+    console.log(this);
     this.$('.add-list').before(listView.el);
   },
   renderNewCard: function(listId, model) {

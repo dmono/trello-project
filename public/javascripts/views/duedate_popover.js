@@ -1,18 +1,11 @@
-var DueDatePopoverView = Backbone.View.extend({
+var DueDatePopoverView = PopoverView.extend({
   template: App.templates.due_date,
-  $datepicker: this.$('.datepicker'),
-  events: {
-    'click .popover-header a': 'close',
-    'click .date-picker': 'selectDate',
-    'click .save-date': 'save',
-    'click .date-remove': 'removeDueDate',
-  },
-  close: function(e) {
-    if (e) {
-      e.preventDefault();
-    }
-    
-    this.remove();
+  events: function() {
+    return _.extend({}, PopoverView.prototype.events, {
+      'click .date-picker': 'selectDate',
+      'click .save-date': 'save',
+      'click .date-remove': 'removeDueDate',
+    });
   },
   removeDueDate: function(e) {
     e.preventDefault();
@@ -44,14 +37,6 @@ var DueDatePopoverView = Backbone.View.extend({
 
     return hours + ':' + minutes;
   },
-  // updateDateInput: function(date) {
-  //   //var day = moment(date, 'MM/DD/YYYY');
-  //   var time = this.$("input[name='time']").val();
-  //   var timeDay = time.clone().startOf('day');
-  //   var seconds = time.diff(timeDay, 'seconds');
-  //   var newDate = moment(date, 'MM/DD/YYYY').add(seconds);
-  //   console.log(seconds);
-  // },
   setDateTime: function() {
     this.dueDate = this.model.get('dueDate');
     
@@ -60,13 +45,14 @@ var DueDatePopoverView = Backbone.View.extend({
 
       this.$("input[name='date']").val(moment(this.dueDate).format('M/D/YYYY'));
       this.$("input[name='time']").val(moment(this.dueDate).format('h:mm A'));
+
+      this.$('.date-picker').datepicker('setDate', this.date);
     } else {
       this.date = moment().format('YYYY-MM-DD');
 
       this.$("input[name='date']").val(moment().format('M/D/YYYY'));
       this.$("input[name='time']").val('12:00 PM');
     }
-    console.log(this.date);
   },
   updateDateField: function(date) {
     this.date = date;
@@ -86,12 +72,9 @@ var DueDatePopoverView = Backbone.View.extend({
   },
   render: function() {
     this.$el.html(this.template());
-    this.setDateTime();
+    PopoverView.prototype.render.call(this);
     this.displayDatePicker();
-
-    this.$el.appendTo('.popover');
+    this.setDateTime();
+    this.showPopover();
   },
-  initialize: function() {
-    this.render();
-  }
 });

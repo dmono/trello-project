@@ -1,7 +1,7 @@
 var CardView = Backbone.View.extend({
   template: App.templates.card,
   events: {
-    'click': 'displayCardDetails',
+    //'click': 'displayCardDetails',
   },
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));

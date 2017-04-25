@@ -1,12 +1,38 @@
-<a class="button board-title" href="#">My New Board</a>
-<a class="button board-starred" href="#">
-  <span class="icon-small icon-star light"></span>
-</a>
-<a class="button board-visibility" href="#">
-  <span class="icon-small icon-private light"></span>
-  <p>Private</p>
-</a>
-<a class="button board-menu" href="#">
-  <span class="icon-small icon-more light"></span>
-  <p>Show Menu</p>
-</a>
+<div class="board-wrapper">
+  <div class="board-content">
+    <div class="board-header">
+      <a class="button board-title" href="#">My New Board</a>
+      <a class="button board-starred" href="#">
+        <span class="icon-small icon-star light"></span>
+      </a>
+      <a class="button board-visibility" href="#">
+        <span class="icon-small icon-private light"></span>
+        <p>Private</p>
+      </a>
+      <a class="button board-menu" href="#">
+        <span class="icon-small icon-more light"></span>
+        <p>Show Menu</p>
+      </a>
+    </div>
+    <div class="board-lists">
+      <div id="board">
+        <div class="list-wrapper add-list">
+          <div class="overlay"></div>
+          <div class="add-list-placeholder">
+            <p>Add a list</p>
+          </div>
+          <form class="add-list-form list">
+            <input type="text" name="name" placeholder="Add a list..." />
+            <div class="add-list-controls">
+              <input type="submit" value="Save" class="submit-btn" />
+              <a href="#" class="cancel-btn">
+                <span class="icon-large cancel-btn icon-cancel"></span>
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

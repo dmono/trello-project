@@ -9,7 +9,8 @@ body {
 }
 body,
 html,
-textarea {
+textarea,
+input[type='text'] {
   font: normal 14px Helvetica, Arial, sans-serif;
   color: #4d4d4d;
 }
@@ -31,17 +32,50 @@ h3 {
   font-size: 16px;
   color: #4d4d4d;
 }
+input[type='text'],
+textarea {
+  border-radius: 3px;
+  border: none;
+  box-sizing: border-box;
+  resize: none;
+}
 header {
   position: relative;
   width: 100%;
-  height: 30px;
   padding: 5px;
   overflow: hidden;
   flex: none;
   z-index: 10;
   background: #026aa7;
 }
-header .button {
+header .header-logo {
+  position: absolute;
+  display: block;
+  width: 80px;
+  height: 30px;
+  margin-left: -40px;
+  top: 5px;
+  left: 50%;
+  bottom: 0;
+  text-align: center;
+  opacity: 0.5;
+  z-index: 2;
+}
+header .header-logo .header-logo-image {
+  position: absolute;
+  width: 80px;
+  height: 30px;
+  background-image: url("/images/header-logo.png");
+  background-position: top right;
+  background-repeat: no-repeat;
+  background-size: 80px 30px;
+  right: 0;
+  top: 0;
+}
+header .header-logo:hover {
+  opacity: 100;
+}
+header .header-button {
   display: inline-block;
   height: 30px;
   padding: 6px 7px;
@@ -49,27 +83,46 @@ header .button {
   background: rgba(255,255,255,0.2);
   border-radius: 3px;
   box-sizing: border-box;
+  vertical-align: middle;
 }
-header .button:hover {
+header .header-button:hover {
   background: rgba(255,255,255,0.3);
 }
-header .button p {
+header .header-button p {
   display: inline-block;
   padding-left: 10px;
   font-weight: bold;
   color: #fff;
   vertical-align: middle;
 }
-header input[type='text'] {
-  width: 180px;
-  background: none;
-  border: none;
-}
-header .header-logo {
+header .header-search {
+  position: relative;
   display: inline-block;
-  width: 130px;
-  height: 30px;
-  background: url("/images/header-logo.png") no-repeat;
+  vertical-align: middle;
+}
+header .header-search input[type='text'].search-field {
+  width: 180px;
+  padding: 7px;
+  background: rgba(255,255,255,0.3);
+  outline: none;
+  transition: width 150ms;
+}
+header .header-search input[type='text'].search-field:hover {
+  background: rgba(255,255,255,0.5);
+}
+header .header-search input[type='text'].search-field:focus {
+  background: #fff;
+}
+header .header-search span {
+  position: absolute;
+  top: 7px;
+  right: 6px;
+}
+header .header-search span.close-search {
+  display: none;
+}
+header .header-search input[type='text'].search-field.search-field-wide {
+  width: 380px;
 }
 header .user-info {
   position: absolute;
@@ -110,6 +163,7 @@ main {
   background: rgba(255,255,255,0.2);
   border-radius: 3px;
   box-sizing: border-box;
+  vertical-align: middle;
   display: inline-block;
   background: transparent;
 }
@@ -205,6 +259,7 @@ main {
   background: rgba(255,255,255,0.2);
   border-radius: 3px;
   box-sizing: border-box;
+  vertical-align: middle;
   padding: 6px 3px;
   height: 25px;
   line-height: 10px;
@@ -237,11 +292,7 @@ main {
   height: 28px;
   padding: 5px;
   font-weight: 700;
-  border: none;
-  border-radius: 3px;
   background: transparent;
-  box-sizing: border-box;
-  resize: none;
 }
 .list .list-header .list-name textarea:focus {
   background: #fff;
@@ -302,9 +353,6 @@ main {
 }
 .new-card-form textarea {
   width: 230px;
-  border: none;
-  box-sizing: border-box;
-  resize: none;
 }
 .new-card-form textarea:focus {
   outline: none;
@@ -350,11 +398,7 @@ main {
 .add-list-form input[type='text'] {
   width: 100%;
   padding: 5px;
-  font-size: 14px;
-  color: #4d4d4d;
   background: rgba(0,0,0,0.05);
-  box-sizing: border-box;
-  border-radius: 3px;
   border: 1px solid #aaa;
 }
 .add-list-controls {
@@ -373,6 +417,15 @@ main {
 }
 .submit-btn:hover {
   background: #539c3b;
+}
+.delete {
+  margin-left: 10px;
+  color: #c14c38;
+  background: #e2e4e6;
+}
+.delete:hover {
+  color: #fff;
+  background: #c14c38;
 }
 .cancel-btn {
   padding: 8px 5px;
@@ -442,14 +495,9 @@ main {
   width: 100%;
   height: 30px;
   padding: 5px;
-  resize: none;
-  border: none;
-  border-radius: 3px;
   background: transparent;
-  box-sizing: border-box;
   font-weight: 700;
   font-size: 18px;
-  color: #4d4d4d;
 }
 .card-details-modal .header .title textarea:focus {
   outline: none;
@@ -505,12 +553,9 @@ main {
   width: 100%;
   min-height: 110px;
   padding: 7px;
-  resize: none;
   border-color: rgba(0,0,0,0.15);
-  border-radius: 3px;
   background: #e7e8e9;
   box-shadow: inset 0 1px 6px rgba(0,0,0,0.1);
-  box-sizing: border-box;
   outline: none;
 }
 .card-details-modal .main-content .card-comments {
@@ -536,8 +581,6 @@ main {
 .card-details-modal .main-content .card-comments .new-comment textarea {
   width: 100%;
   min-height: 75px;
-  resize: none;
-  outline: none;
 }
 .card-details-modal .main-content .card-activity {
   margin-left: 25px;
@@ -585,6 +628,7 @@ main {
   margin-bottom: 20px;
 }
 .card-details-modal .modal-button {
+  position: relative;
   display: block;
   max-width: 300px;
   height: 34px;
@@ -608,6 +652,17 @@ main {
 }
 .card-details-modal .modal-button:hover span {
   color: #fff;
+}
+.card-details-modal .modal-button .subscribe-active {
+  position: absolute;
+  width: 18px;
+  height: 12px;
+  padding: 2px 5px 8px 5px;
+  top: 5px;
+  right: 5px;
+  text-align: center;
+  background: #61bd4f;
+  border-radius: 3px;
 }
 .markdown h1 {
   font-size: 20px;
@@ -639,10 +694,14 @@ main {
 .popover .popover-header a span:hover {
   color: #444;
 }
+.popover .popover-header .popover-back {
+  left: -250px;
+}
 .popover .popover-content {
   max-height: 325px;
   padding: 0 10px 10px 10px;
   margin-bottom: 8px;
+  text-align: center;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -651,32 +710,40 @@ main {
   height: 35px;
   padding: 7px;
   margin-bottom: 10px;
-  font-size: 14px;
-  color: #444;
   border-radius: 3px;
   border: 1px solid #cdd2d4;
   background: #e2e4e6;
-  box-sizing: border-box;
 }
 .popover .popover-content input[type='text']:focus {
   background: #fff;
+}
+.popover .popover-content select#position-options,
+.popover .popover-content select#list-options {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 10px;
+  font-size: 14px;
 }
 .popover .popover-content input[type='text'].due-date-calendar {
   width: 120px;
   margin-right: 5px;
 }
 .popover .popover-content .date-picker {
+  height: 205px;
   padding-bottom: 10px;
-  margin: 0 auto;
 }
-.popover .popover-content .date-remove {
-  float: right;
-  color: #c14c38;
-  background: #e2e4e6;
+.popover .popover-content .date-picker .ui-datepicker {
+  width: 272px;
 }
-.popover .popover-content .date-remove:hover {
-  color: #fff;
-  background: #c14c38;
+.popover .popover-content label > p {
+  margin-bottom: 5px;
+  font-weight: 700;
+  text-align: left;
+  color: #4d4d4d;
+}
+.popover .popover-content .controls {
+  clear: both;
+  margin-top: 10px;
 }
 .label-wrapper {
   margin-bottom: 5px;
@@ -690,6 +757,16 @@ main {
   vertical-align: middle;
   border-radius: 3px;
   cursor: pointer;
+}
+.label-wrapper .label p {
+  padding: 10px;
+  text-align: left;
+  color: #fff;
+  font-weight: 700;
+  text-shadow: 0 0 5px rgba(0,0,0,0.2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .label-wrapper .label .selected-label {
   display: none;
@@ -734,6 +811,36 @@ main {
 .label-wrapper .blue:hover {
   box-shadow: -8px 0 #055a8c;
 }
+.label-wrapper .sky {
+  background: #00c2e0;
+}
+.label-wrapper .sky:hover {
+  box-shadow: -8px 0 #0098b7;
+}
+.label-wrapper .lime {
+  background: #51e898;
+}
+.label-wrapper .lime:hover {
+  box-shadow: -8px 0 #4dc26b;
+}
+.label-wrapper .pink {
+  background: #ff80ce;
+}
+.label-wrapper .pink:hover {
+  box-shadow: -8px 0 #cd5a91;
+}
+.label-wrapper .black {
+  background: #4d4d4d;
+}
+.label-wrapper .black:hover {
+  box-shadow: -8px 0 #272727;
+}
+.label-wrapper .none {
+  background: #b6bbbf;
+}
+.label-wrapper .none:hover {
+  box-shadow: -8px 0 #959da1;
+}
 .label-wrapper .edit-label {
   display: inline-block;
   width: 35px;
@@ -748,6 +855,40 @@ main {
 }
 .label-wrapper .edit-label span {
   padding-top: 10px;
+}
+.label-wrapper .select-color > p {
+  text-align: left;
+}
+.label-wrapper .color-picker {
+  float: left;
+  position: relative;
+  width: 46px;
+  height: 36px;
+  margin: 0 10px 10px 0;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.label-wrapper .color-picker:hover {
+  opacity: 0.8;
+  box-shadow: none;
+}
+.label-wrapper .color-picker .selected-color {
+  display: none;
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  text-shadow: 0 0 5px rgba(0,0,0,0.2), 0 0 2px #000;
+}
+.search-modal {
+  width: 600px;
+  height: 350px;
+  margin-top: 10px;
+  top: 30px;
+  left: 94px;
+  overflow: hidden;
+  background: #edeff0;
+  box-sizing: border-box;
+  border-radius: 3px;
 }
 .icon-activity:before {
   content: '\e900';

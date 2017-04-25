@@ -1,6 +1,6 @@
 <div class="header">
   <span class="icon-card icon-xlarge modal-header-icon"></span>
-  <a href="#" class="icon-cancel icon-xlarge"></a>
+  <a href="#" class="icon-cancel icon-xlarge close-modal"></a>
   <div class="title">
     <textarea>{{title}}</textarea>
   </div>
@@ -31,8 +31,8 @@
       <div class="edit-description">
         <textarea></textarea>
         <div class="description-controls">
-          <input type="submit" value="Save" class="submit-btn" />
-          <a href="#" class="cancel-btn">
+          <input type="submit" value="Save" class="submit-btn save-description" />
+          <a href="#" class="cancel-btn close-description">
             <span class="icon-xlarge cancel-btn icon-cancel"></span>
           </a>
         </div>
@@ -98,6 +98,11 @@
     <a href="#" class="modal-button subscribe-btn">
       <span class="icon-subscribe icon-small"></span>
       Subscribe
+      {{#if subscribed}}
+      <div class="subscribe-active">
+        <span class="icon-small icon-check selected-color light"></span>
+      </div>
+      {{/if}}
     </a>
     <a href="#" class="modal-button archive-btn">
       <span class="icon-archive icon-small"></span>

@@ -1,0 +1,15 @@
+<div class="popover-content">
+  
+  {{#if results}}
+    <ul class="search-results">
+    {{#each results}}
+      <li>
+        <a href="/cards/{{formatCardUrl id title}}"><h3>{{title}}</h3></a>
+        <p>in <h4>{{list}}</h4> on <h4>{{board}}</h4></p>
+      </li>
+    {{/each}}
+    </ul>
+  {{else}}
+    <p class="no-result">We couldn't find any cards that matched your search.</p>
+  {{/if}}
+</div>
