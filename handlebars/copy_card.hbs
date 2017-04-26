@@ -2,12 +2,21 @@
   <a href="#" class="close-popover">
     <span class="icon-small icon-cancel"></span>
   </a>
-  Move Card
+  Copy Card
 </div>
 <div class="popover-content">
   <dl>
     <dt>
-      <label for="list"><p>List</p></label>
+      <label for="title"><p>Title</p></label>
+    </dt>
+    <dd>
+      <textarea></textarea>
+    </dd>
+  </dl>
+  <dl>
+    <label><p>Copy to...</p></label>
+    <dt>
+      <label><p>List</p></label>
     </dt>
     <dd>
       <select id="list-options">
@@ -16,16 +25,14 @@
         {{/each}}
       </select>
     </dd>
-  </dl>
-  <dl>
     <dt>
-      <label for="position"><p>Position</p></label>
+      <label><p>Position</p></label>
     </dt>
     <dd>
       <select id="position-options"></select>
     </dd>
   </dl>
   <div class="controls">
-    <input type="submit" value="Move" class="submit-btn" />
+    <input type="submit" value="Create Card" class="submit-btn" />
   </div>
 </div>

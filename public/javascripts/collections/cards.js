@@ -24,6 +24,19 @@ var Cards = Backbone.Collection.extend({
       App.trigger('cardsModified');
     }
   },
+  copyCard: function(model, listId, position, title) {
+    var newCard = model.clone().unset('id').unset('position').set({
+      listId: Number(listId),
+      title: title,
+    });
+    var self = this;
+
+    this.create(newCard, {
+      success: function(model) {
+        App.trigger(self.updatePositions(listId, model.id, false, position));
+      },
+    });
+  },
   addCard: function(title, listId) {
     var position = this.where({ listId: Number(listId) }).length + 1;
 

@@ -15,15 +15,21 @@
 
 <div class="main-content">
   <div class="card-information">
+    <div class="card-modal-labels">
+    </div>
+    <div class="card-modal-due-date">
+      <h5>Due Date</h5>
+      <a href="#"></a>
+    </div>
     <div class="description">
       {{#if description}}
-      <p>
-        Description 
-        <a href="#">Edit</a>
-      </p>
+      <div>
+        <h5>Description</h5>
+        <a href="#" class="display-edit">Edit</a>
+      </div>
       <div class="description-text markdown"></div>
       {{else}}
-      <a href="#" class="empty-description">
+      <a href="#" class="empty-description display-edit">
         <span class="icon-description icon-large"></span>
         Edit the description...
       </a>

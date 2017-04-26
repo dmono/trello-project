@@ -268,8 +268,14 @@ main
     
 .new-card-form
   display: none
+  .card-content
+    border-radius: 3px
+    &:hover
+      background: #ffffff
   textarea
-    width: 230px
+    width: 100%
+    height: 95px
+    resize: vertical
     &:focus
       outline: none
 
@@ -377,9 +383,11 @@ main
   background: #edeff0
   box-sizing: border-box
   border-radius: 3px
-  p
+  p, h5
     display: inline-block
     padding-right: 5px
+    margin-bottom: 5px
+    font-weight: normal
     color: #999999
   .header
     positon: relative
@@ -420,6 +428,10 @@ main
     box-sizing: border-box
     .card-information
       margin: 0 0 20px 25px
+      .card-modal-labels, .card-modal-due-date, .description
+        margin-bottom: 25px
+      .card-modal-due-date > a
+        display: block
       .description
         a
           padding-right: 10px
@@ -580,7 +592,6 @@ main
       height: 35px
       padding: 7px
       margin-bottom: 10px
-      border-radius: 3px
       border: 1px solid #CDD2D4
       background: #E2E4E6
       &:focus
@@ -590,6 +601,13 @@ main
       height: 40px
       margin-bottom: 10px
       font-size: 14px
+    textarea
+      width: 100%
+      height: 90px
+      padding: 8px
+      margin-bottom: 15px
+      resize: vertical
+      border: 1px solid #CDD2D4
     input[type='text'].due-date-calendar
       width: 120px
       margin-right: 5px
@@ -623,7 +641,7 @@ main
       text-align: left
       color: #ffffff
       font-weight: 700
-      text-shadow: 0 0 5px rgba(0, 0, 0, .2)
+      text-shadow: 0 0 3px rgba(0, 0, 0, .8)
       overflow: hidden
       text-overflow: ellipsis
       white-space: nowrap
@@ -689,6 +707,21 @@ main
       background: #D6DADC
     span
       padding-top: 10px
+  .card-modal-label
+    display: inline-block
+    min-width: 40px
+    height: 32px
+    padding: 8px
+    margin-right: 10px
+    border-radius: 3px
+    box-sizing: border-box
+    p
+      color: #ffffff
+      font-weight: 700
+      text-shadow: 0 0 3px rgba(0, 0, 0, .8)
+    &:hover
+      opacity: .8
+      box-shadow: none
   .select-color > p
     text-align: left
   .color-picker

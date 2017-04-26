@@ -5,7 +5,7 @@ var LabelsSelectView = Backbone.View.extend({
   },
   selectLabel: function(e) {
     var $label = $(e.target).closest('.label');
-    var labelId = $label.attr('data-id');
+    var labelId = Number($label.attr('data-id'));
     var currentLabels = this.model.get('labels') || [];
 
     $label.find('.selected-label').toggle();
@@ -21,7 +21,7 @@ var LabelsSelectView = Backbone.View.extend({
     var currentLabels = this.model.get('labels');
     if (currentLabels) {
       this.$('.label').each(function() {
-        if (currentLabels.indexOf($(this).attr('data-id')) > -1) {
+        if (currentLabels.indexOf(Number($(this).attr('data-id'))) > -1) {
           $(this).find('.selected-label').css('display', 'block');
         }
       });
@@ -32,11 +32,7 @@ var LabelsSelectView = Backbone.View.extend({
     this.render();
   },
   render: function() {
-    //PopoverView.prototype.render.call(this);
     this.$el.html(this.template({ labels: App.labels.toJSON() }));
-    // $('.popover').empty().append(this.el);
-    // this.$el.parent().show();
-    // this.setPosition(this.elementOffset, this.elementHeight);
     this.checkLabels();
   },
   initialize: function() {

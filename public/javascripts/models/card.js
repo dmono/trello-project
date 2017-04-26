@@ -3,7 +3,6 @@ var Card = Backbone.Model.extend({
     description: '',
     dueDate: '',
     labels: '',
-    comments: [],
     activity: [],
     subscribed: false,
   }

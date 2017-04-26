@@ -56,6 +56,13 @@ var App = {
       height: height,
     });
   },
+  displayCopyMenu: function(model, offset, height) {
+    this.copyCardView = new CopyPopoverView({
+      model: model,
+      offset: offset,
+      height: height,
+    });
+  },
   closeSearch: function() {
     this.searchView.close();
   },
@@ -65,11 +72,13 @@ var App = {
     // this.listenTo(this.cards, 'update', this.boardView.render);
     this.on('cardsModified', this.renderBoard.bind(this));
     this.on('cardMoved', this.cards.updatePositions.bind(this.cards));
+    this.on('cardCopied', this.cards.copyCard.bind(this.cards));
     this.on('changeCardList', this.cards.updateListId.bind(this.cards));
     this.on('addNewCard', this.cards.addCard.bind(this.cards));
     this.on('viewLabels', this.displayLabelsMenu.bind(this));
     this.on('viewDueDate', this.displayDueDateMenu.bind(this));
     this.on('viewMoveCard', this.displayMoveMenu.bind(this));
+    this.on('viewCopyCard', this.displayCopyMenu.bind(this));
     this.listenTo(this.headerView, 'openSearch', this.displaySearch);
     this.listenTo(this.headerView, 'performSearch', this.search);
     this.listenTo(this.headerView, 'closeSearch', this.closeSearch);

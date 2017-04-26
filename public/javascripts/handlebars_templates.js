@@ -4,12 +4,28 @@ this["JST"]["board"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":fun
     return "<div class=\"board-wrapper\"><div class=\"board-content\"><div class=\"board-header\"><a class=\"button board-title\" href=\"#\">My New Board</a><a class=\"button board-starred\" href=\"#\"><span class=\"icon-small icon-star light\"></span></a><a class=\"button board-visibility\" href=\"#\"><span class=\"icon-small icon-private light\"></span><p>Private</p></a><a class=\"button board-menu\" href=\"#\"><span class=\"icon-small icon-more light\"></span><p>Show Menu</p></a></div><div class=\"board-lists\"><div id=\"board\"><div class=\"list-wrapper add-list\"><div class=\"overlay\"></div><div class=\"add-list-placeholder\"><p>Add a list</p></div><form class=\"add-list-form list\"><input type=\"text\" name=\"name\" placeholder=\"Add a list...\" /><div class=\"add-list-controls\"><input type=\"submit\" value=\"Save\" class=\"submit-btn\" /><a href=\"#\" class=\"cancel-btn\"><span class=\"icon-large cancel-btn icon-cancel\"></span></a></div></form></div></div></div></div></div>";
 },"useData":true});
 
+this["JST"]["card_modal_labels"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
+    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+
+  return "<a href=\"#\" class=\"card-modal-label "
+    + alias4(((helper = (helper = helpers.color || (depth0 != null ? depth0.color : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"color","hash":{},"data":data}) : helper)))
+    + "\"><p>"
+    + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
+    + "</p> </a>";
+},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return "<h5>Labels</h5><div class=\"label-wrapper\">"
+    + ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.labels : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "</div>";
+},"useData":true});
+
 this["JST"]["card_modal"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
     return "<span class=\"icon-subscribe icon-small\"></span>";
 },"3":function(container,depth0,helpers,partials,data) {
-    return "<p>Description <a href=\"#\">Edit</a></p><div class=\"description-text markdown\"></div>";
+    return "<div><h5>Description</h5><a href=\"#\" class=\"display-edit\">Edit</a></div><div class=\"description-text markdown\"></div>";
 },"5":function(container,depth0,helpers,partials,data) {
-    return "<a href=\"#\" class=\"empty-description\"><span class=\"icon-description icon-large\"></span>Edit the description...</a>";
+    return "<a href=\"#\" class=\"empty-description display-edit\"><span class=\"icon-description icon-large\"></span>Edit the description...</a>";
 },"7":function(container,depth0,helpers,partials,data) {
     return "<div class=\"subscribe-active\"><span class=\"icon-small icon-check selected-color light\"></span></div>";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
@@ -19,7 +35,7 @@ this["JST"]["card_modal"] = Handlebars.template({"1":function(container,depth0,h
     + container.escapeExpression(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
     + "</textarea></div><div class=\"current-list\"><p>in list</p><a href=\"#\"></a>"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.subscribed : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "</div></div><div class=\"main-content\"><div class=\"card-information\"><div class=\"description\">"
+    + "</div></div><div class=\"main-content\"><div class=\"card-information\"><div class=\"card-modal-labels\"></div><div class=\"card-modal-due-date\"><h5>Due Date</h5><a href=\"#\"></a></div><div class=\"description\">"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.description : depth0),{"name":"if","hash":{},"fn":container.program(3, data, 0),"inverse":container.program(5, data, 0),"data":data})) != null ? stack1 : "")
     + "<div class=\"edit-description\"><textarea></textarea><div class=\"description-controls\"><input type=\"submit\" value=\"Save\" class=\"submit-btn save-description\" /><a href=\"#\" class=\"cancel-btn close-description\"><span class=\"icon-xlarge cancel-btn icon-cancel\"></span></a></div></div></div></div><div class=\"card-comments\"><div class=\"comment-header\"><span class=\"icon-comment icon-xlarge\"></span><h3>Add Comment</h3></div><div class=\"new-comment\"><span class=\"icon-member icon-xlarge\"></span><textarea placeholder=\"Write a comment...\" class=\"comment-bg\"></textarea><div class=\"comment-controls\"><input type=\"submit\" value=\"Send\" class=\"submit-btn\" /></div></div></div><div class=\"card-activity\"><div class=\"activity-header\"><span class=\"icon-activity icon-xlarge\"></span><h3>Activity</h3></div><div class=\"activity-content\"></div></div></div><div class=\"sidebar\"><div class=\"add-buttons\"><h3>Add</h3><a href=\"#\" class=\"modal-button members-btn\"><span class=\"icon-member icon-small\"></span>Members</a><a href=\"#\" class=\"modal-button labels-btn\"><span class=\"icon-label icon-small\"></span>Labels</a><a href=\"#\" class=\"modal-button checklist-btn\"><span class=\"icon-checklist icon-small\"></span>Checklist</a><a href=\"#\" class=\"modal-button duedate-btn\"><span class=\"icon-duedate icon-small\"></span>Due Date</a><a href=\"#\" class=\"modal-button attachment-btn\"><span class=\"icon-attachment icon-small\"></span>Attachment</a></div><div class=\"action-buttons\"><h3>Actions</h3><a href=\"#\" class=\"modal-button move-btn\"><span class=\"icon-forward icon-small\"></span>Move</a><a href=\"#\" class=\"modal-button copy-btn\"><span class=\"icon-card icon-small\"></span>Copy</a><a href=\"#\" class=\"modal-button subscribe-btn\"><span class=\"icon-subscribe icon-small\"></span>Subscribe"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.subscribed : depth0),{"name":"if","hash":{},"fn":container.program(7, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
@@ -63,9 +79,9 @@ this["JST"]["copy_card"] = Handlebars.template({"1":function(container,depth0,he
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return "<div class=\"popover-header\"><a href=\"#\" class=\"close-popover\"><span class=\"icon-small icon-cancel\"></span></a>Move Card</div><div class=\"popover-content\"><dl><dt><label for=\"list\"><p>List</p></label></dt><dd><select id=\"list-options\">"
+  return "<div class=\"popover-header\"><a href=\"#\" class=\"close-popover\"><span class=\"icon-small icon-cancel\"></span></a>Copy Card</div><div class=\"popover-content\"><dl><dt><label for=\"title\"><p>Title</p></label></dt><dd><textarea></textarea></dd></dl><dl><label><p>Copy to...</p></label><dt><label><p>List</p></label></dt><dd><select id=\"list-options\">"
     + ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.lists : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "</select></dd></dl><dl><dt><label for=\"position\"><p>Position</p></label></dt><dd><select id=\"position-options\"></select></dd></dl><div class=\"controls\"><input type=\"submit\" value=\"Move\" class=\"submit-btn\" /></div></div>";
+    + "</select></dd><dt><label><p>Position</p></label></dt><dd><select id=\"position-options\"></select></dd></dl><div class=\"controls\"><input type=\"submit\" value=\"Create Card\" class=\"submit-btn\" /></div></div>";
 },"useData":true});
 
 this["JST"]["due_date"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
@@ -141,7 +157,7 @@ this["JST"]["move_card"] = Handlebars.template({"1":function(container,depth0,he
 },"useData":true});
 
 this["JST"]["newCard"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div class=\"new-card-form\"><div class=\"card-wrapper\"><div class=\"card-content\"><textarea class=\"new-card-form\"></textarea></div></div><div class=\"new-card-controls\"><input type=\"submit\" value=\"Add\" class=\"submit-btn\" /><a href=\"#\" class=\"cancel-btn\"><span class=\"icon-large cancel-btn icon-cancel\"></span></a></div></div>";
+    return "<div class=\"new-card-form\"><div class=\"card-wrapper\"><div class=\"card-content\"><textarea class=\"new-card-textarea\"></textarea></div></div><div class=\"new-card-controls\"><input type=\"submit\" value=\"Add\" class=\"submit-btn\" /><a href=\"#\" class=\"cancel-btn\"><span class=\"icon-large cancel-btn icon-cancel\"></span></a></div></div>";
 },"useData":true});
 
 this["JST"]["search"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {

@@ -25,31 +25,6 @@ var MovePopoverView = PopoverView.extend({
     App.trigger('cardMoved', listId, this.model.id, true, position);
     this.close();
   },
-  setPositionList: function() {
-    var listId = Number(this.$('#list-options').find(':selected').val());
-    var $positionList = this.$('#position-options');
-
-    $positionList.html(App.templates.move_card_positions({ positions: this.positionValues(listId)}));
-  },
-  listsValues: function() {
-    var lists = [];
-    var self = this;
-
-    App.lists.each(function(list) {
-      lists.push({
-        name: list.get('name'),
-        id: list.get('id'),
-        selected: list.get('id') === self.model.get('listId'),
-      });
-    });
-
-    return lists;
-  },
-  positionValues: function(listId) {
-    var offset = this.model.get('listId') === listId ? 1 : 2;
-
-    return _.range(1, App.cards.where({ listId: listId }).length + offset);
-  },
   render: function() {
     this.$el.html(this.template({ lists: this.listsValues() }));
     this.setPositionList();

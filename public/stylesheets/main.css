@@ -351,8 +351,16 @@ main {
 .new-card-form {
   display: none;
 }
+.new-card-form .card-content {
+  border-radius: 3px;
+}
+.new-card-form .card-content:hover {
+  background: #fff;
+}
 .new-card-form textarea {
-  width: 230px;
+  width: 100%;
+  height: 95px;
+  resize: vertical;
 }
 .new-card-form textarea:focus {
   outline: none;
@@ -467,9 +475,12 @@ main {
   box-sizing: border-box;
   border-radius: 3px;
 }
-.card-details-modal p {
+.card-details-modal p,
+.card-details-modal h5 {
   display: inline-block;
   padding-right: 5px;
+  margin-bottom: 5px;
+  font-weight: normal;
   color: #999;
 }
 .card-details-modal .header {
@@ -519,6 +530,14 @@ main {
 }
 .card-details-modal .main-content .card-information {
   margin: 0 0 20px 25px;
+}
+.card-details-modal .main-content .card-information .card-modal-labels,
+.card-details-modal .main-content .card-information .card-modal-due-date,
+.card-details-modal .main-content .card-information .description {
+  margin-bottom: 25px;
+}
+.card-details-modal .main-content .card-information .card-modal-due-date > a {
+  display: block;
 }
 .card-details-modal .main-content .card-information .description a {
   padding-right: 10px;
@@ -710,7 +729,6 @@ main {
   height: 35px;
   padding: 7px;
   margin-bottom: 10px;
-  border-radius: 3px;
   border: 1px solid #cdd2d4;
   background: #e2e4e6;
 }
@@ -723,6 +741,14 @@ main {
   height: 40px;
   margin-bottom: 10px;
   font-size: 14px;
+}
+.popover .popover-content textarea {
+  width: 100%;
+  height: 90px;
+  padding: 8px;
+  margin-bottom: 15px;
+  resize: vertical;
+  border: 1px solid #cdd2d4;
 }
 .popover .popover-content input[type='text'].due-date-calendar {
   width: 120px;
@@ -763,7 +789,7 @@ main {
   text-align: left;
   color: #fff;
   font-weight: 700;
-  text-shadow: 0 0 5px rgba(0,0,0,0.2);
+  text-shadow: 0 0 3px rgba(0,0,0,0.8);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -855,6 +881,24 @@ main {
 }
 .label-wrapper .edit-label span {
   padding-top: 10px;
+}
+.label-wrapper .card-modal-label {
+  display: inline-block;
+  min-width: 40px;
+  height: 32px;
+  padding: 8px;
+  margin-right: 10px;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+.label-wrapper .card-modal-label p {
+  color: #fff;
+  font-weight: 700;
+  text-shadow: 0 0 3px rgba(0,0,0,0.8);
+}
+.label-wrapper .card-modal-label:hover {
+  opacity: 0.8;
+  box-shadow: none;
 }
 .label-wrapper .select-color > p {
   text-align: left;

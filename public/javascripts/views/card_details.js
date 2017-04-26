@@ -5,13 +5,17 @@ var CardDetailsView = Backbone.View.extend({
     'blur .header textarea': 'updateTitle',
     'click .save-description': 'updateDescription',
     'click a.close-description': 'closeDescriptionEdit',
-    'click .description p a': 'displayDescriptionEdit',
+    'click .display-edit': 'displayDescriptionEdit',
     'click .comment-controls input[type="submit"]': 'addComment',
     'click .labels-btn': 'displayLabels',
+    'click .card-modal-label': 'displayLabels',
     'click .duedate-btn': 'displayDueDate',
+    'click .card-modal-due-date a': 'displayDueDate',
     'click .move-btn': 'displayMove',
+    'click .copy-btn': 'displayCopy',
     'click .current-list a': 'displayMove',
     'click .subscribe-btn': 'setSubscribe',
+    'click .archive-btn': 'displayArchive',
   },
   closeModal: function(e) {
     if (e) { e.preventDefault() }
@@ -39,6 +43,13 @@ var CardDetailsView = Backbone.View.extend({
     var height = $(e.currentTarget).height();
 
     App.trigger('viewMoveCard', this.model, offset, height);
+  },
+  displayCopy: function(e) {
+    e.preventDefault();
+    var offset = $(e.currentTarget).offset();
+    var height = $(e.currentTarget).height();
+
+    App.trigger('viewCopyCard', this.model, offset, height);
   },
   setSubscribe: function(e) {
     e.preventDefault();
@@ -96,6 +107,17 @@ var CardDetailsView = Backbone.View.extend({
     var converter = new showdown.Converter();
     this.$('.description-text').html(converter.makeHtml(this.model.get('description')));
   },
+  displayModalLabels: function() {
+    var labels = this.model.get('labels').map(function(labelId) {
+      return App.labels.get(labelId).toJSON();
+    });
+    console.log(labels);
+    this.$('.card-modal-labels').empty().append(App.templates.card_modal_labels({ labels: labels }));
+  },
+  displayModalDueDate: function() {
+    var dueDate = moment(this.model.get('dueDate')).format('MMM D [at] h:mm A');
+    this.$('.card-modal-due-date a').html(dueDate);
+  },
   getCurrentList: function() {
     return App.lists.get(this.model.get('listId')).get('name');
   },
@@ -121,6 +143,14 @@ var CardDetailsView = Backbone.View.extend({
 
     if (this.model.get('description')) {
       this.displayDescription();
+    }
+
+    if (this.model.get('labels')) {
+      this.displayModalLabels();
+    }
+
+    if (this.model.get('dueDate')) {
+      this.displayModalDueDate();
     }
 
     this.renderComments(); 
