@@ -15,6 +15,17 @@ var CardsView = Backbone.View.extend({
     $('.new-card-form').filter(':visible').hide();
     $('.add-new-card').filter(':hidden').show();
   },
+  updateCardPositions: function(listId) {
+    var cardPositions = this.$el.sortable('toArray', { attribute: 'data-id' });
+    var position;
+
+    App.trigger('cardMoved', listId);
+
+    // this.collection.each(function(list) {
+    //   position = listPositions.indexOf(String(list.id)) + 1;
+    //   list.save({ position: position });
+    // });
+  },
   makeSortable: function() {
     var self = this;
     this.$el.sortable({
@@ -41,11 +52,11 @@ var CardsView = Backbone.View.extend({
 
         if (ui.sender) {
           formerListId = ui.sender.closest('.list-wrapper').attr('data-id');
-          App.trigger('cardMoved', formerListId);
           App.trigger('changeCardList', cardId, newListId);
+          App.trigger('cardMoved', formerListId, cardId);
         }
 
-        App.trigger('cardMoved', newListId);
+        App.trigger('cardMoved', newListId, cardId);
       },
     }).disableSelection();
   },

@@ -48,6 +48,26 @@ this["JST"]["comment"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":f
     + " - <a href=\"#\" class=\"edit-comment\">Edit</a> - <a href=\"#\" class=\"delete-comment\">Delete</a></p></div>";
 },"useData":true});
 
+this["JST"]["copy_card"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
+    var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+
+  return "<option value=\""
+    + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
+    + "\" "
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.selected : depth0),{"name":"if","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ">"
+    + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
+    + "</option>";
+},"2":function(container,depth0,helpers,partials,data) {
+    return "selected";
+},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return "<div class=\"popover-header\"><a href=\"#\" class=\"close-popover\"><span class=\"icon-small icon-cancel\"></span></a>Move Card</div><div class=\"popover-content\"><dl><dt><label for=\"list\"><p>List</p></label></dt><dd><select id=\"list-options\">"
+    + ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.lists : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "</select></dd></dl><dl><dt><label for=\"position\"><p>Position</p></label></dt><dd><select id=\"position-options\"></select></dd></dl><div class=\"controls\"><input type=\"submit\" value=\"Move\" class=\"submit-btn\" /></div></div>";
+},"useData":true});
+
 this["JST"]["due_date"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     return "<div class=\"popover-header\"><a href=\"#\" class=\"close-popover\"><span class=\"icon-small icon-cancel\"></span></a>Change Due Date</div><div class=\"popover-content\"><input type=\"text\" class=\"due-date-calendar\" name=\"date\" placeholder=\"Enter Date...\" /><input type=\"text\" class=\"due-date-calendar\" name=\"time\" placeholder=\"Enter Time...\" /><div class=\"date-picker\"></div><div class=\"controls\"><input type=\"submit\" value=\"Save\" class=\"submit-btn save-date\" /><input type=\"submit\" value=\"Remove\" class=\"submit-btn delete\" /></div></div>";
 },"useData":true});
@@ -121,7 +141,7 @@ this["JST"]["move_card"] = Handlebars.template({"1":function(container,depth0,he
 },"useData":true});
 
 this["JST"]["newCard"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div class=\"new-card-form\"><div class=\"card-wrapper\"><div class=\"card-content\"><textarea class=\"new-card-textarea\"></textarea></div></div><div class=\"new-card-controls\"><input type=\"submit\" value=\"Add\" class=\"submit-btn\" /><a href=\"#\" class=\"cancel-btn\"><span class=\"icon-large cancel-btn icon-cancel\"></span></a></div></div>";
+    return "<div class=\"new-card-form\"><div class=\"card-wrapper\"><div class=\"card-content\"><textarea class=\"new-card-form\"></textarea></div></div><div class=\"new-card-controls\"><input type=\"submit\" value=\"Add\" class=\"submit-btn\" /><a href=\"#\" class=\"cancel-btn\"><span class=\"icon-large cancel-btn icon-cancel\"></span></a></div></div>";
 },"useData":true});
 
 this["JST"]["search"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {

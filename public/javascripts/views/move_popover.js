@@ -6,22 +6,30 @@ var MovePopoverView = PopoverView.extend({
       'click input[type="submit"]': 'moveCard',
     });
   },
-  moveCard: function(e) {
+  moveCard: function() {
+    var formerListId = this.model.get('listId');
     var listId = this.$('#list-options').find(':selected').val();
-    var position = this.$('#position-options').find(':selected').val();
-    this.model.save({
-      listId: Number(listId),
-      position: Number(position),
-    });
+    var position = Number(this.$('#position-options').find(':selected').val());
 
+    if (formerListId !== listId) {
+      var self = this;
+      this.model.save({
+        listId: Number(listId)
+      }, {
+        success: function() {
+          App.trigger('cardMoved', formerListId, self.model.id, true);
+        },
+      });
+    }
+
+    App.trigger('cardMoved', listId, this.model.id, true, position);
     this.close();
-    App.trigger('cardMoved');
   },
   setPositionList: function() {
-    var list = App.lists.get(this.$('#list-options').find(':selected').val());
+    var listId = Number(this.$('#list-options').find(':selected').val());
     var $positionList = this.$('#position-options');
 
-    $positionList.html(App.templates.move_card_positions({ positions: this.positionValues(list)}));
+    $positionList.html(App.templates.move_card_positions({ positions: this.positionValues(listId)}));
   },
   listsValues: function() {
     var lists = [];
@@ -34,13 +42,13 @@ var MovePopoverView = PopoverView.extend({
         selected: list.get('id') === self.model.get('listId'),
       });
     });
-    console.log(lists);
+
     return lists;
   },
-  positionValues: function(list) {
-    return _.range(list.get('cardPositions').length + 1).map(function(num) {
-      return num + 1;
-    });
+  positionValues: function(listId) {
+    var offset = this.model.get('listId') === listId ? 1 : 2;
+
+    return _.range(1, App.cards.where({ listId: listId }).length + offset);
   },
   render: function() {
     this.$el.html(this.template({ lists: this.listsValues() }));

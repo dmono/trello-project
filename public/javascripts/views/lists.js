@@ -43,7 +43,7 @@ var ListsView = Backbone.View.extend({
     var position;
 
     this.collection.each(function(list) {
-      position = listPositions.indexOf(String(list.id)) + 1
+      position = listPositions.indexOf(String(list.id)) + 1;
       list.save({ position: position });
     });
   },
@@ -78,7 +78,6 @@ var ListsView = Backbone.View.extend({
     var listView = new ListView({
       model: item,
     });
-    console.log(this);
     this.$('.add-list').before(listView.el);
   },
   renderNewCard: function(listId, model) {

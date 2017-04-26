@@ -61,11 +61,12 @@ var App = {
   },
   bindEvents: function() {
     _.extend(this, Backbone.Events);
-    // this.listenTo(this.lists, 'change', this.boardView.render);
-    this.on('cardMoved', this.lists.updateCardPositions.bind(this.lists));
+    // this.listenTo(this.lists, 'update', this.boardView.render.bind(this));
+    // this.listenTo(this.cards, 'update', this.boardView.render);
+    this.on('cardsModified', this.renderBoard.bind(this));
+    this.on('cardMoved', this.cards.updatePositions.bind(this.cards));
     this.on('changeCardList', this.cards.updateListId.bind(this.cards));
     this.on('addNewCard', this.cards.addCard.bind(this.cards));
-    this.on('renderNewCard', this.lists.view.renderNewCard.bind(this.lists.view));
     this.on('viewLabels', this.displayLabelsMenu.bind(this));
     this.on('viewDueDate', this.displayDueDateMenu.bind(this));
     this.on('viewMoveCard', this.displayMoveMenu.bind(this));

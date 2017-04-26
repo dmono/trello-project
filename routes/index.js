@@ -54,13 +54,13 @@ router.route('/lists/:id')
   .put(function(req, res, next) {
     listsApi.put(req.body);
     listsApi.record();
-    res.status(200).end();
+    res.json({});
   })
   .delete(function(req, res, next) {
     const id = req.params.id;
     listsApi.delete(id);
     listsApi.record();
-    res.status(200).end();
+    res.json({});
   });
 
 router.route('/cards')
@@ -91,13 +91,14 @@ router.route('/cards/:id')
   .put(function(req, res, next) {
     cardsApi.put(req.body);
     cardsApi.record();
-    res.status(200).end();
+    res.json({});
   })
   .delete(function(req, res, next) {
     const id = req.params.id;
     cardsApi.delete(id);
     cardsApi.record();
-    res.status(200).end();
+    res.json({});
+    // res.status(200).end();
   });
 
 router.route('/comments')
@@ -120,13 +121,13 @@ router.route('/comments/:id')
   .put(function(req, res, next) {
     commentsApi.put(req.body);
     commentsApi.record();
-    res.status(200).end();
+    res.json({});
   })
   .delete(function(req, res, next) {
     const id = req.params.id;
     commentsApi.delete(id);
     commentsApi.record();
-    res.status(200).end();
+    res.json({});
   });
 
 router.route('/labels')
@@ -149,13 +150,13 @@ router.route('/labels/:id')
   .put(function(req, res, next) {
     labelsApi.put(req.body);
     labelsApi.record();
-    res.status(200).end();
+    res.json({});
   })
   .delete(function(req, res, next) {
     const id = req.params.id;
     labelsApi.delete(id);
     labelsApi.record();
-    res.status(200).end();
+    res.json({});
   });
 
 module.exports = router;

@@ -16,8 +16,7 @@ var BoardView = Backbone.View.extend({
       name: name,
       position: newPosition,
     }, { 
-      wait: true,
-      success: function(list, response) {
+      success: function() {
         self.$('a.cancel-btn').trigger('click');
       },
     });
@@ -77,16 +76,13 @@ var BoardView = Backbone.View.extend({
 
     this.$('.add-list').before(listView.el);
   },
-  renderNewCard: function(listId, model) {
-    this.collection.get(listId).view.cardsView.renderCard(model);
-  },
   render: function() {
     this.$el.html(this.template());
     this.$('.list-wrapper').not('.add-list').remove();
     this.collection.each(this.renderList.bind(this));
+    this.makeSortable();
   },
   initialize: function() {
-    this.makeSortable();
     this.collection.view = this;
     this.listenTo(this.collection, 'add', this.render);
   },
