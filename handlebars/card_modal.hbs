@@ -15,12 +15,16 @@
 
 <div class="main-content">
   <div class="card-information">
+    {{#if labels}}
     <div class="card-modal-labels">
     </div>
+    {{/if}}
+    {{#if dueDate}}
     <div class="card-modal-due-date">
       <h5>Due Date</h5>
       <a href="#"></a>
     </div>
+    {{/if}}
     <div class="description">
       {{#if description}}
       <div>

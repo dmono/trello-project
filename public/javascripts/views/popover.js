@@ -42,7 +42,7 @@ var PopoverView = Backbone.View.extend({
   close: function(e) {
     if (e) { e.preventDefault(); }
     this.$el.parent().offset({ top: 0, left: 0 }).hide();
-    this.model.unbind();
+    //this.model.off();
     this.remove();
   },
   showPopover: function() {

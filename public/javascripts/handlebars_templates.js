@@ -23,10 +23,14 @@ this["JST"]["card_modal_labels"] = Handlebars.template({"1":function(container,d
 this["JST"]["card_modal"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
     return "<span class=\"icon-subscribe icon-small\"></span>";
 },"3":function(container,depth0,helpers,partials,data) {
-    return "<div><h5>Description</h5><a href=\"#\" class=\"display-edit\">Edit</a></div><div class=\"description-text markdown\"></div>";
+    return "<div class=\"card-modal-labels\"></div>";
 },"5":function(container,depth0,helpers,partials,data) {
-    return "<a href=\"#\" class=\"empty-description display-edit\"><span class=\"icon-description icon-large\"></span>Edit the description...</a>";
+    return "<div class=\"card-modal-due-date\"><h5>Due Date</h5><a href=\"#\"></a></div>";
 },"7":function(container,depth0,helpers,partials,data) {
+    return "<div><h5>Description</h5><a href=\"#\" class=\"display-edit\">Edit</a></div><div class=\"description-text markdown\"></div>";
+},"9":function(container,depth0,helpers,partials,data) {
+    return "<a href=\"#\" class=\"empty-description display-edit\"><span class=\"icon-description icon-large\"></span>Edit the description...</a>";
+},"11":function(container,depth0,helpers,partials,data) {
     return "<div class=\"subscribe-active\"><span class=\"icon-small icon-check selected-color light\"></span></div>";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {};
@@ -35,10 +39,13 @@ this["JST"]["card_modal"] = Handlebars.template({"1":function(container,depth0,h
     + container.escapeExpression(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
     + "</textarea></div><div class=\"current-list\"><p>in list</p><a href=\"#\"></a>"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.subscribed : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "</div></div><div class=\"main-content\"><div class=\"card-information\"><div class=\"card-modal-labels\"></div><div class=\"card-modal-due-date\"><h5>Due Date</h5><a href=\"#\"></a></div><div class=\"description\">"
-    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.description : depth0),{"name":"if","hash":{},"fn":container.program(3, data, 0),"inverse":container.program(5, data, 0),"data":data})) != null ? stack1 : "")
+    + "</div></div><div class=\"main-content\"><div class=\"card-information\">"
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.labels : depth0),{"name":"if","hash":{},"fn":container.program(3, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.dueDate : depth0),{"name":"if","hash":{},"fn":container.program(5, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "<div class=\"description\">"
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.description : depth0),{"name":"if","hash":{},"fn":container.program(7, data, 0),"inverse":container.program(9, data, 0),"data":data})) != null ? stack1 : "")
     + "<div class=\"edit-description\"><textarea></textarea><div class=\"description-controls\"><input type=\"submit\" value=\"Save\" class=\"submit-btn save-description\" /><a href=\"#\" class=\"cancel-btn close-description\"><span class=\"icon-xlarge cancel-btn icon-cancel\"></span></a></div></div></div></div><div class=\"card-comments\"><div class=\"comment-header\"><span class=\"icon-comment icon-xlarge\"></span><h3>Add Comment</h3></div><div class=\"new-comment\"><span class=\"icon-member icon-xlarge\"></span><textarea placeholder=\"Write a comment...\" class=\"comment-bg\"></textarea><div class=\"comment-controls\"><input type=\"submit\" value=\"Send\" class=\"submit-btn\" /></div></div></div><div class=\"card-activity\"><div class=\"activity-header\"><span class=\"icon-activity icon-xlarge\"></span><h3>Activity</h3></div><div class=\"activity-content\"></div></div></div><div class=\"sidebar\"><div class=\"add-buttons\"><h3>Add</h3><a href=\"#\" class=\"modal-button members-btn\"><span class=\"icon-member icon-small\"></span>Members</a><a href=\"#\" class=\"modal-button labels-btn\"><span class=\"icon-label icon-small\"></span>Labels</a><a href=\"#\" class=\"modal-button checklist-btn\"><span class=\"icon-checklist icon-small\"></span>Checklist</a><a href=\"#\" class=\"modal-button duedate-btn\"><span class=\"icon-duedate icon-small\"></span>Due Date</a><a href=\"#\" class=\"modal-button attachment-btn\"><span class=\"icon-attachment icon-small\"></span>Attachment</a></div><div class=\"action-buttons\"><h3>Actions</h3><a href=\"#\" class=\"modal-button move-btn\"><span class=\"icon-forward icon-small\"></span>Move</a><a href=\"#\" class=\"modal-button copy-btn\"><span class=\"icon-card icon-small\"></span>Copy</a><a href=\"#\" class=\"modal-button subscribe-btn\"><span class=\"icon-subscribe icon-small\"></span>Subscribe"
-    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.subscribed : depth0),{"name":"if","hash":{},"fn":container.program(7, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.subscribed : depth0),{"name":"if","hash":{},"fn":container.program(11, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "</a><a href=\"#\" class=\"modal-button archive-btn\"><span class=\"icon-archive icon-small\"></span>Archive</a></div><a href=\"#\">Share and more...</a></div>";
 },"useData":true});
 
@@ -85,7 +92,7 @@ this["JST"]["copy_card"] = Handlebars.template({"1":function(container,depth0,he
 },"useData":true});
 
 this["JST"]["due_date"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div class=\"popover-header\"><a href=\"#\" class=\"close-popover\"><span class=\"icon-small icon-cancel\"></span></a>Change Due Date</div><div class=\"popover-content\"><input type=\"text\" class=\"due-date-calendar\" name=\"date\" placeholder=\"Enter Date...\" /><input type=\"text\" class=\"due-date-calendar\" name=\"time\" placeholder=\"Enter Time...\" /><div class=\"date-picker\"></div><div class=\"controls\"><input type=\"submit\" value=\"Save\" class=\"submit-btn save-date\" /><input type=\"submit\" value=\"Remove\" class=\"submit-btn delete\" /></div></div>";
+    return "<div class=\"popover-header\"><a href=\"#\" class=\"close-popover\"><span class=\"icon-small icon-cancel\"></span></a>Change Due Date</div><div class=\"popover-content\"><input type=\"text\" class=\"due-date-calendar\" name=\"date\" placeholder=\"Enter Date...\" /><input type=\"text\" class=\"due-date-calendar\" name=\"time\" placeholder=\"Enter Time...\" /><div class=\"date-picker\"></div><div class=\"controls\"><input type=\"submit\" value=\"Save\" class=\"submit-btn save-date\" /><input type=\"submit\" value=\"Remove\" class=\"submit-btn delete remove-date\" /></div></div>";
 },"useData":true});
 
 this["JST"]["header"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {

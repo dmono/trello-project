@@ -564,6 +564,9 @@ main {
 .card-details-modal .main-content .card-information .description .description-text {
   margin: 10px 0 20px 0;
 }
+.card-details-modal .main-content .card-information .description .description-text p {
+  color: #4d4d4d;
+}
 .card-details-modal .main-content .card-information .description .edit-description {
   display: none;
   margin: 10px 0 20px 0;

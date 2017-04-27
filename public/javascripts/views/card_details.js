@@ -1,4 +1,5 @@
 var CardDetailsView = Backbone.View.extend({
+  className: 'card-details-wrapper',
   template: App.templates.card_modal,
   events: {
     'click a.close-modal': 'closeModal',
@@ -20,36 +21,29 @@ var CardDetailsView = Backbone.View.extend({
   closeModal: function(e) {
     if (e) { e.preventDefault() }
     this.remove();
-    $('.modal-overlay').hide();
-    router.navigate('', { trigger: true });
+    App.trigger('closeModal');
+  },
+  triggerPopoverView: function(e, type) {
+    var offset = $(e.currentTarget).offset();
+    var height = $(e.currentTarget).height();
+
+    App.trigger(type, this.model, offset, height);
   },
   displayLabels: function(e) {
     e.preventDefault();
-    var offset = $(e.currentTarget).offset();
-    var height = $(e.currentTarget).height();
-
-    App.trigger('viewLabels', this.model, offset, height);
+    this.triggerPopoverView(e, 'viewLabels');
   },
   displayDueDate: function(e) {
     e.preventDefault();
-    var offset = $(e.currentTarget).offset();
-    var height = $(e.currentTarget).height();
-
-    App.trigger('viewDueDate', this.model, offset, height);
+    this.triggerPopoverView(e, 'viewDueDate');
   },
   displayMove: function(e) {
     e.preventDefault();
-    var offset = $(e.currentTarget).offset();
-    var height = $(e.currentTarget).height();
-
-    App.trigger('viewMoveCard', this.model, offset, height);
+    this.triggerPopoverView(e, 'viewMoveCard');
   },
   displayCopy: function(e) {
     e.preventDefault();
-    var offset = $(e.currentTarget).offset();
-    var height = $(e.currentTarget).height();
-
-    App.trigger('viewCopyCard', this.model, offset, height);
+    this.triggerPopoverView(e, 'viewCopyCard');
   },
   setSubscribe: function(e) {
     e.preventDefault();
@@ -111,7 +105,7 @@ var CardDetailsView = Backbone.View.extend({
     var labels = this.model.get('labels').map(function(labelId) {
       return App.labels.get(labelId).toJSON();
     });
-    console.log(labels);
+
     this.$('.card-modal-labels').empty().append(App.templates.card_modal_labels({ labels: labels }));
   },
   displayModalDueDate: function() {
@@ -138,7 +132,6 @@ var CardDetailsView = Backbone.View.extend({
   },
   render: function() {
     this.$el.html(App.templates.card_modal(this.model.toJSON()));
-    this.$el.addClass('card-details-modal');
     this.$('.current-list a').html(this.getCurrentList());
 
     if (this.model.get('description')) {
@@ -154,10 +147,11 @@ var CardDetailsView = Backbone.View.extend({
     }
 
     this.renderComments(); 
-    $('.modal-overlay').empty().append(this.el).css('display', 'flex');
   },
   initialize: function() {
     this.render();
-    // this.listenTo(this.model, 'change', this.render.bind(this));
+    this.listenTo(this.model, 'change', this.render.bind(this));
+    this.listenTo(App.comments, 'update', this.render.bind(this));
+    this.listenTo(App.labels, 'change update', this.render.bind(this));
   }
 });

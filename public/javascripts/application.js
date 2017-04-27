@@ -25,6 +25,13 @@ var App = {
     this.cardDetailsView = new CardDetailsView({
       model: App.cards.get(id),
     });
+
+    $('.card-details-modal').html(this.cardDetailsView.el);
+    $('.modal-overlay').css('display', 'flex');
+  },
+  closeModal: function() {
+    $('.modal-overlay').hide();
+    router.navigate('', { trigger: true });
   },
   search: function(query) {
     this.searchResults.set('query', query);
@@ -79,6 +86,7 @@ var App = {
     this.on('viewDueDate', this.displayDueDateMenu.bind(this));
     this.on('viewMoveCard', this.displayMoveMenu.bind(this));
     this.on('viewCopyCard', this.displayCopyMenu.bind(this));
+    this.on('closeModal', this.closeModal);
     this.listenTo(this.headerView, 'openSearch', this.displaySearch);
     this.listenTo(this.headerView, 'performSearch', this.search);
     this.listenTo(this.headerView, 'closeSearch', this.closeSearch);

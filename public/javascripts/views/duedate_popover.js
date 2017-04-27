@@ -4,21 +4,26 @@ var DueDatePopoverView = PopoverView.extend({
     return _.extend({}, PopoverView.prototype.events, {
       'click .date-picker': 'selectDate',
       'click .save-date': 'save',
-      'click .date-remove': 'removeDueDate',
+      'click .remove-date': 'removeDueDate',
     });
   },
   removeDueDate: function(e) {
     e.preventDefault();
-
     this.model.save({ dueDate: '' });
     this.close();
   },
   save: function(e) {
     e.preventDefault();
+
     var time = this.formatTime(this.$("input[name='time']").val());
     var newDate = moment(this.date + 'T' + time).toDate();
 
     this.model.save({ dueDate: newDate });
+    // activity: this.model.get('activity').push({
+    //   user: 'Trello User',
+    //   type: 'due date',
+    //   action: 'changed',
+    // })
     this.close();
   },
   formatTime: function(time) {
@@ -27,7 +32,8 @@ var DueDatePopoverView = PopoverView.extend({
     var minutes = units[1];
     var dayPart = units[2];
 
-    if (dayPart === 'PM') {
+    console.log(time);
+    if (dayPart === 'PM' && time !== '12:00 PM') {
       hours = (Number(hours) + 12).toString();
     }
 

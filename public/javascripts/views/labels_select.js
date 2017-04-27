@@ -6,13 +6,13 @@ var LabelsSelectView = Backbone.View.extend({
   selectLabel: function(e) {
     var $label = $(e.target).closest('.label');
     var labelId = Number($label.attr('data-id'));
-    var currentLabels = this.model.get('labels') || [];
+    var currentLabels = JSON.parse(JSON.stringify(this.model.get('labels'))) || [];
 
     $label.find('.selected-label').toggle();
 
     if ($label.find('.selected-label:visible').length > 0) {
       currentLabels.push(labelId);
-      this.model.save({ labels: currentLabels })
+      this.model.save({ labels: currentLabels });
     } else {
       this.model.save({ labels: _.without(currentLabels, labelId) });
     }
