@@ -12,14 +12,8 @@ var MovePopoverView = PopoverView.extend({
     var position = Number(this.$('#position-options').find(':selected').val());
 
     if (formerListId !== listId) {
-      var self = this;
-      this.model.save({
-        listId: Number(listId)
-      }, {
-        success: function() {
-          App.trigger('cardMoved', formerListId, self.model.id, true);
-        },
-      });
+      App.trigger('changeCardList', this.model.id, listId);
+      App.trigger('cardMoved', formerListId, this.model.id, true);
     }
 
     App.trigger('cardMoved', listId, this.model.id, true, position);

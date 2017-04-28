@@ -56,14 +56,13 @@ var ListsView = Backbone.View.extend({
       tolerance: 'pointer',
       containment: 'window',
       appendTo: 'body',
-      zIndex: 9999,
-      // helper: 'clone',
+      helper: 'clone',
       start: function(e, ui) {
-        ui.placeholder.height(ui.item.find('.list').height());
-        ui.item.addClass('tilt');
+        ui.placeholder.height(ui.helper.find('.list').height());
+        ui.helper.addClass('tilt');
       },
       stop: function(e, ui) {
-        ui.item.removeClass('tilt');
+        ui.helper.removeClass('tilt');
       },
       update: function(e, ui) {
         self.updatePositions();

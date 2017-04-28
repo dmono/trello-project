@@ -1,4 +1,31 @@
 <div class="card-content">
-  <a href="/cards/{{formatCardUrl id title}}" class="card-title">{{title}}</a>
+  <a href="/cards/{{formatCardUrl id title}}" class="card-title">
+    <div class="card-labels">
+      {{#each labels}}
+        <div class="{{color}} card-label" title="{{name}}"></div>
+      {{/each}}
+    </div>
+    {{title}}
+    <div class="status-icons">
+      {{#if subscribed}}
+      <span class="icon-subscribe icon-small"></span>
+      {{/if}}
+      {{#if dueDate}}
+      <span>
+        <span class="icon-duedate icon-small"></span>
+        <span class="icon-text">{{formatShortDueDate dueDate}}</span>
+      </span>
+      {{/if}}
+      {{#if description}}
+      <span class="icon-description icon-small"></span>
+      {{/if}}
+      {{#if comments}}
+      <span>
+        <span class="icon-comment icon-small"></span>
+        <span class="icon-text">{{comments}}</span>
+      </span>
+      {{/if}}
+    </div>
+  </a>
 </div>
 

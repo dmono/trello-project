@@ -7,6 +7,8 @@ var App = {
     this.renderBoard();
     this.headerView = new HeaderView();
     this.bindEvents();
+    this.searchResults = new Filter({ collection: this.cards });
+    this.notifications = new Notifications(this.getNotifications());
   },
   renderBoard: function() {
     this.boardView = new BoardView({
@@ -32,15 +34,6 @@ var App = {
   closeModal: function() {
     $('.modal-overlay').hide();
     router.navigate('', { trigger: true });
-  },
-  search: function(query) {
-    this.searchResults.set('query', query);
-  },
-  displaySearch: function() {
-    this.searchResults = new Filter({ collection: this.cards });
-    this.searchView = new SearchView({
-      model: this.searchResults,
-    });
   },
   displayLabelsMenu: function(model, offset, height) {
     this.labelsView = new LabelsPopoverView({
@@ -70,13 +63,52 @@ var App = {
       height: height,
     });
   },
+  displaySearch: function(offset, height) {
+    $('.popover').addClass('search-modal');
+    this.searchView = new SearchView({
+      model: this.searchResults,
+      offset: offset,
+      height: height,
+    });
+  },
   closeSearch: function() {
-    this.searchView.close();
+    this.headerView.resetSearchField();
+    $('.popover').removeClass('search-modal').hide();
+    this.searchView.remove();
+  },
+  search: function(query) {
+    this.searchResults.set('query', query);
+  },
+  displayNotifications: function(offset, height) {
+    $('.popover').addClass('notification-modal');
+    this.notificationsView = new NotificationsView({
+      collection: this.notifications,
+      offset: offset,
+      height: height,
+    });
+  },
+  getNotifications: function() {
+    var results = [];
+    var self = this;
+    var subscribedCards = this.cards.where({
+      subscribed: true,
+      archived: false,
+    });
+
+    subscribedCards.forEach(function(model) {
+      results.push(self.activityLog.where({ cardId: model.id }));
+    });
+
+    return _.flatten(results);
+  },
+  checkForNotifications: function() {
+    this.notifications.add(this.getNotifications());
   },
   bindEvents: function() {
     _.extend(this, Backbone.Events);
-    // this.listenTo(this.lists, 'update', this.boardView.render.bind(this));
+    //this.listenTo(this.cards, 'add', this.renderBoard.bind(this));
     // this.listenTo(this.cards, 'update', this.boardView.render);
+    // need this because the view renders before the positions are updated
     this.on('cardsModified', this.renderBoard.bind(this));
     this.on('cardMoved', this.cards.updatePositions.bind(this.cards));
     this.on('cardCopied', this.cards.copyCard.bind(this.cards));
@@ -87,9 +119,11 @@ var App = {
     this.on('viewMoveCard', this.displayMoveMenu.bind(this));
     this.on('viewCopyCard', this.displayCopyMenu.bind(this));
     this.on('closeModal', this.closeModal);
+    this.on('closeSearch', this.closeSearch.bind(this));
+    this.on('viewNotifications', this.displayNotifications.bind(this));
     this.listenTo(this.headerView, 'openSearch', this.displaySearch);
     this.listenTo(this.headerView, 'performSearch', this.search);
-    this.listenTo(this.headerView, 'closeSearch', this.closeSearch);
+    this.listenTo(this.activityLog, 'add', this.checkForNotifications);
   },
   init: function() {
     // this.bindEvents();
@@ -99,6 +133,17 @@ var App = {
 Handlebars.registerHelper('formatDateTime', function(dateTime) {
   var dateObj = moment(dateTime);
   return dateObj.format('MMM D') + ' at ' + dateObj.format('h:mm A');
+});
+
+Handlebars.registerHelper('formatShortDueDate', function(dateTime) {
+  var dateObj = moment(dateTime);
+  return dateObj.format('MMM D');
+});
+
+Handlebars.registerHelper('formatActivityTime', function(dateTime) {
+  var dateObj = moment(dateTime);
+  return dateObj.fromNow();
+  //return dateObj.calendar();
 });
 
 Handlebars.registerHelper('formatCardUrl', function(id, title) {

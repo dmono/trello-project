@@ -9,8 +9,7 @@ var CardsView = Backbone.View.extend({
     var listId = $(e.target).parent().parent().closest('.list-wrapper').attr('data-id');
     App.trigger('addNewCard', title, listId);
   },
-  closeForm: function(e) {
-    //e.preventDefault();
+  closeForm: function() {
     $('.new-card-form').filter(':visible').find('textarea').val('');
     $('.new-card-form').filter(':visible').hide();
     $('.add-new-card').filter(':hidden').show();
@@ -20,11 +19,6 @@ var CardsView = Backbone.View.extend({
     var position;
 
     App.trigger('cardMoved', listId);
-
-    // this.collection.each(function(list) {
-    //   position = listPositions.indexOf(String(list.id)) + 1;
-    //   list.save({ position: position });
-    // });
   },
   makeSortable: function() {
     var self = this;
@@ -34,36 +28,37 @@ var CardsView = Backbone.View.extend({
       placeholder: 'card-placeholder',
       tolerance: 'pointer',
       containment: 'window',
-      zIndex: 9999,
-      // appendTo: 'body',
-      // helper: 'clone',
+      appendTo: 'body',
+      helper: 'clone',
       start: function(e, ui) {
-        ui.placeholder.width(ui.item.width());
-        ui.placeholder.height(ui.item.height());
-        ui.item.addClass('tilt');
-      },
-      stop: function(e, ui) {
-        ui.item.removeClass('tilt');
+        ui.placeholder.width(ui.helper.width());
+        ui.placeholder.height(ui.helper.height());
+        ui.helper.addClass('tilt');
       },
       update: function(e, ui) {
         var newListId = ui.item.closest('.list-wrapper').attr('data-id');
         var cardId = ui.item.attr('data-id');
         var formerListId;
+        var newPositions;
+        var position;
 
         if (ui.sender) {
           formerListId = ui.sender.closest('.list-wrapper').attr('data-id');
           App.trigger('changeCardList', cardId, newListId);
           App.trigger('cardMoved', formerListId, cardId);
         }
+        
+        newPositions = self.$el.sortable('toArray', { attribute: 'data-id' });
+        position = _.indexOf(newPositions, cardId) + 1;
 
-        App.trigger('cardMoved', newListId, cardId);
+        App.trigger('cardMoved', newListId, cardId, false, position);
       },
     }).disableSelection();
   },
   render: function() {
     this.$el.append(App.templates.newCard());
     this.collection.forEach(this.renderCard.bind(this));
-    this.$el.attr('class', 'cards-container');
+    this.$el.addClass('cards-container');
   },
   renderCard: function(card) {
     var cardView = new CardView({

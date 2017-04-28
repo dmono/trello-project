@@ -3,7 +3,7 @@ var Cards = Backbone.Collection.extend({
   model: Card,
   updateListId: function(id, newListId) {
     var card = this.get(id);
-    card.save({ listId: +newListId });
+    card.save({ listId: Number(newListId) }, { activityType: 'moved card' });
   },
   updatePositions: function(listId, cardId, menuMove, position) {
     var cards = this.where({ listId: Number(listId) }).sort(function(a, b) {

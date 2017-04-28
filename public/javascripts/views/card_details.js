@@ -16,7 +16,9 @@ var CardDetailsView = Backbone.View.extend({
     'click .copy-btn': 'displayCopy',
     'click .current-list a': 'displayMove',
     'click .subscribe-btn': 'setSubscribe',
-    'click .archive-btn': 'displayArchive',
+    'click .archive-btn': 'archiveCard',
+    'click .send-to-board-btn': 'archiveCard',
+    'click .card-modal-delete': 'deleteCard',
   },
   closeModal: function(e) {
     if (e) { e.preventDefault() }
@@ -45,6 +47,10 @@ var CardDetailsView = Backbone.View.extend({
     e.preventDefault();
     this.triggerPopoverView(e, 'viewCopyCard');
   },
+  displayCopy: function(e) {
+    e.preventDefault();
+    this.triggerPopoverView(e, 'viewCopyCard');
+  },
   setSubscribe: function(e) {
     e.preventDefault();
     this.model.save('subscribed', !this.model.get('subscribed'));
@@ -59,7 +65,7 @@ var CardDetailsView = Backbone.View.extend({
       newComment.user = 'Trello User';
       newComment.cardId = this.model.get('id');
 
-      App.comments.create(newComment);
+      App.comments.create(newComment, { activityType: 'add comment' });
     }
 
     $(e.target).closest('.new-comment').find('textarea').val('');
@@ -111,6 +117,15 @@ var CardDetailsView = Backbone.View.extend({
   displayModalDueDate: function() {
     var dueDate = moment(this.model.get('dueDate')).format('MMM D [at] h:mm A');
     this.$('.card-modal-due-date a').html(dueDate);
+  },
+  archiveCard: function(e) {
+    e.preventDefault();
+    this.model.save({ 'archived': !this.model.get('archived') }, { activityType: 'archive' });
+  },
+  deleteCard: function(e) {
+    e.preventDefault();
+    this.model.destroy();
+    this.closeModal();
   },
   getCurrentList: function() {
     return App.lists.get(this.model.get('listId')).get('name');

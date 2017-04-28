@@ -1,7 +1,13 @@
 <div class="header">
-  <span class="icon-card icon-xlarge modal-header-icon"></span>
+  {{#if archived}}
+  <div class='modal-archived-msg'>
+    <span class="icon-archive icon-xlarge"></span>
+    <p>This card is archived.</p>
+  </div>
+  {{/if}}
   <a href="#" class="icon-cancel icon-xlarge close-modal"></a>
   <div class="title">
+    <span class="icon-card icon-xlarge modal-header-icon"></span>
     <textarea>{{title}}</textarea>
   </div>
   <div class="current-list">
@@ -114,10 +120,22 @@
       </div>
       {{/if}}
     </a>
+    {{#unless archived}}
     <a href="#" class="modal-button archive-btn">
       <span class="icon-archive icon-small"></span>
       Archive
     </a>
+    {{/unless}}
+    {{#if archived}}
+    <a href="#" class="modal-button send-to-board-btn">
+      <span class="icon-refresh icon-small"></span>
+      Send to Board
+    </a>
+    <a href="#" class="modal-button card-modal-delete">
+      <span class="icon-delete icon-small light"></span>
+      Delete
+    </a>
+    {{/if}}
   </div>
   <a href="#">Share and more...</a>
 </div>

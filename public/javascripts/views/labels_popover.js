@@ -37,6 +37,7 @@ var LabelsPopoverView = PopoverView.extend({
   },
   initialize: function(options) {
     PopoverView.prototype.initialize.call(this, options);
-    this.on('updatedLabel', this.viewLabels.bind(this));
+    this.listenTo(this, 'updatedLabel', this.viewLabels.bind(this));
+    //this.on('updatedLabel', this.viewLabels.bind(this));
   },
 });

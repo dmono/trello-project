@@ -4,7 +4,6 @@ doctype html
 html(lang='en-us')
   head
     title= title
-    //- link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
     link(rel='stylesheet', href='https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css')
     +stylesheet_link_tag('main')
     +javascript_include_tag('vendor/all')
@@ -21,14 +20,15 @@ html(lang='en-us')
     block content
 
     +javascript_include_tag('application')
-    +javascript_include_tag('models/board', 'models/list', 'models/card', 'models/comment', 'models/filter', 'models/label')
-    +javascript_include_tag('collections/lists', 'collections/cards', 'collections/comments', 'collections/labels')
-    +javascript_include_tag('views/header', 'views/board', 'views/list', 'views/lists', 'views/card', 'views/cards', 'views/card_details', 'views/comment', 'views/popover', 'views/labels_popover', 'views/labels_edit', 'views/labels_select', 'views/duedate_popover', 'views/search', 'views/move_popover', 'views/copy_popover')
+    +javascript_include_tag('models/board', 'models/list', 'models/card', 'models/comment', 'models/filter', 'models/label', 'models/activity')
+    +javascript_include_tag('collections/lists', 'collections/cards', 'collections/comments', 'collections/labels', 'collections/activity_log', 'collections/notifications')
+    +javascript_include_tag('views/header', 'views/board', 'views/list', 'views/lists', 'views/card', 'views/cards', 'views/card_details', 'views/comment', 'views/popover', 'views/labels_popover', 'views/labels_edit', 'views/labels_select', 'views/duedate_popover', 'views/search', 'views/move_popover', 'views/copy_popover', 'views/notifications')
     script(type='text/javascript').
       App.lists = new Lists(!{JSON.stringify(lists)});
       App.cards = new Cards(!{JSON.stringify(cards)});
       App.comments = new Comments(!{JSON.stringify(comments)});
       App.labels = new Labels(!{JSON.stringify(labels)});
+      App.activityLog = new ActivityLog(!{JSON.stringify(activityLog)});
     +javascript_include_tag('router')
       //-=App.init(!{JSON.stringify(lists)}, !{JSON.stringify(cards)}, !{JSON.stringify(comments)});
 

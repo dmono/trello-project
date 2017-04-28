@@ -24,6 +24,11 @@ var labelsApi = Object
     .create(require(path.resolve(path.dirname(__dirname), moduleFile)))
     .init(labelsFilePath);
 
+var activityLogFilePath = path.resolve(path.dirname(__dirname), 'data/activity_log.json');
+var activityLogApi = Object
+    .create(require(path.resolve(path.dirname(__dirname), moduleFile)))
+    .init(activityLogFilePath);
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', {
@@ -31,6 +36,7 @@ router.get('/', function(req, res, next) {
     cards: cardsApi.tempStore.data,
     comments: commentsApi.tempStore.data,
     labels: labelsApi.tempStore.data,
+    activityLog: activityLogApi.tempStore.data,
   });
 });
 
@@ -86,6 +92,7 @@ router.route('/cards/:id')
       cards: cardsApi.tempStore.data,
       comments: commentsApi.tempStore.data,
       labels: labelsApi.tempStore.data,
+      activityLog: activityLogApi.tempStore.data,
     });
   })
   .put(function(req, res, next) {
@@ -156,6 +163,35 @@ router.route('/labels/:id')
     const id = req.params.id;
     labelsApi.delete(id);
     labelsApi.record();
+    res.json({});
+  });
+
+router.route('/activity')
+  .get(function(req, res, next) {
+    res.json(activityLogApi.tempStore.data);
+  })
+  .post(function(req, res, next) {
+    let activityLog;
+    if (Object.keys(req.body).length > 0) {
+      activityLog = activityLogApi.set(req.body);
+      activityLogApi.record();
+    } else {
+      activityLog = activityLogApi.tempStore;
+    }
+
+    res.json(_(activityLog.data).findWhere({ id: activityLog.lastId }));
+  });
+
+router.route('/activityLog/:id')
+  .put(function(req, res, next) {
+    activityLogApi.put(req.body);
+    activityLogApi.record();
+    res.json({});
+  })
+  .delete(function(req, res, next) {
+    const id = req.params.id;
+    activityLogApi.delete(id);
+    activityLogApi.record();
     res.json({});
   });
 

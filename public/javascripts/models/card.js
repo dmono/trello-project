@@ -3,16 +3,7 @@ var Card = Backbone.Model.extend({
     description: '',
     dueDate: '',
     labels: '',
-    activity: [],
     subscribed: false,
+    archived: false,
   },
-  logActivity: function(options) {
-    var existing = this.get('activity');
-    this.save({ activity: existing.push(options) }, {
-      success: function(model) {
-        App.trigger('notify', model);
-      },
-    });
-
-  }
 });

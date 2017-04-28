@@ -123,12 +123,19 @@ header .header-search span.close-search {
 }
 header .header-search input[type='text'].search-field.search-field-wide {
   width: 380px;
+  background: #fff;
 }
 header .user-info {
   position: absolute;
   display: inline-block;
   margin-right: 0px;
   right: 5px;
+}
+header .notify-alert {
+  background: #eb5a46;
+}
+header .notify-alert:hover {
+  background: #b04632;
 }
 main {
   position: relative;
@@ -304,7 +311,7 @@ main {
   min-height: 10px;
   z-index: 1;
   overflow-y: auto;
-  overlow-x: hidden;
+  overflow-x: hidden;
   flex: 1 1 auto;
 }
 .card-wrapper {
@@ -326,6 +333,61 @@ main {
   padding: 6px 6px 4px 8px;
   overflow: hidden;
   z-index: 10;
+}
+.card-content .card-labels {
+  padding-bottom: 5px;
+  overflow: hidden;
+}
+.card-content .card-label {
+  float: left;
+  width: 40px;
+  height: 8px;
+  margin: 0 5px 3px 0;
+  border-radius: 3px;
+}
+.card-content .green {
+  background: #61bd4f;
+}
+.card-content .yellow {
+  background: #f2d600;
+}
+.card-content .orange {
+  background: #ffab4a;
+}
+.card-content .red {
+  background: #eb5a46;
+}
+.card-content .purple {
+  background: #c377e0;
+}
+.card-content .blue {
+  background: #0079bf;
+}
+.card-content .sky {
+  background: #00c2e0;
+}
+.card-content .lime {
+  background: #51e898;
+}
+.card-content .pink {
+  background: #ff80ce;
+}
+.card-content .black {
+  background: #4d4d4d;
+}
+.card-content .none {
+  background: #b6bbbf;
+}
+.card-content .status-icons {
+  margin-top: 5px;
+}
+.card-content .status-icons .icon-text {
+  display: inline-block;
+  font-size: 12px;
+  color: #999;
+}
+.card-content .status-icons > span {
+  margin-right: 10px;
 }
 .card-title {
   display: block;
@@ -483,15 +545,24 @@ main {
   font-weight: normal;
   color: #999;
 }
+.card-details-modal .modal-archived-msg {
+  width: 100%;
+  padding: 10px;
+  margin: 0 0 15px -15px;
+  background: #f7eb8f;
+  border-radius: 3px;
+}
+.card-details-modal .modal-archived-msg p {
+  padding-left: 10px;
+  margin-top: 5px;
+}
+.card-details-modal .modal-archived-msg > .icon-archive {
+  vertical-align: top;
+}
 .card-details-modal .header {
   positon: relative;
   padding: 0 35px 5px 25px;
   margin-bottom: 15px;
-}
-.card-details-modal .header .modal-header-icon {
-  position: absolute;
-  top: 20px;
-  left: 15px;
 }
 .card-details-modal .header > a {
   position: absolute;
@@ -500,12 +571,19 @@ main {
   text-decoration: none;
 }
 .card-details-modal .header .title {
+  position: relative;
   width: 100%;
+}
+.card-details-modal .header .title .modal-header-icon {
+  position: absolute;
+  top: 6px;
+  left: -30px;
 }
 .card-details-modal .header .title textarea {
   width: 100%;
   height: 30px;
   padding: 5px;
+  margin-left: -5px;
   background: transparent;
   font-weight: 700;
   font-size: 18px;
@@ -685,6 +763,13 @@ main {
   text-align: center;
   background: #61bd4f;
   border-radius: 3px;
+}
+.card-details-modal .card-modal-delete {
+  color: #fff;
+  background: #eb5a46;
+}
+.card-details-modal .card-modal-delete:hover {
+  background: #b04632;
 }
 .markdown h1 {
   font-size: 20px;
@@ -926,16 +1011,45 @@ main {
   left: 14px;
   text-shadow: 0 0 5px rgba(0,0,0,0.2), 0 0 2px #000;
 }
-.search-modal {
+.search-modal,
+.notification-modal {
   width: 600px;
   height: 350px;
-  margin-top: 10px;
-  top: 30px;
-  left: 94px;
   overflow: hidden;
   background: #edeff0;
   box-sizing: border-box;
   border-radius: 3px;
+}
+.search-modal {
+  padding: 15px;
+}
+.search-results li {
+  padding: 10px 5px;
+  text-align: left;
+}
+.notification-modal {
+  width: 450px;
+  height: 260px;
+}
+.notification-modal .activity-wrapper {
+  padding-top: 10px;
+  text-align: left;
+}
+.notification-modal .activity-wrapper > .icon-member {
+  display: inline-block;
+  padding-right: 10px;
+  vertical-align: top;
+}
+.notification-modal .activity-wrapper .activity-content {
+  display: inline-block;
+  width: 395px;
+  padding: 0 0 15px 0;
+  border-bottom: 1px solid #e3e4e5;
+  color: #4d4d4d;
+}
+.notification-modal .activity-wrapper .activity-content .notification-time {
+  font-size: 12px;
+  color: #999;
 }
 .icon-activity:before {
   content: '\e900';
@@ -1039,6 +1153,9 @@ main {
 .icon-refresh:before {
   content: '\e92F';
 }
+.icon-delete:before {
+  content: '\e930';
+}
 .icon-search:before {
   content: '\e931';
 }
@@ -1081,7 +1198,7 @@ main {
 .icon-small {
   width: 18px;
   height: 18px;
-  line-height: 16px;
+  line-height: 18px;
   font-size: 12px;
 }
 .icon-xlarge {

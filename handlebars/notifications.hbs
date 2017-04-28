@@ -1,0 +1,27 @@
+<div class="popover-header">
+  <a href="#" class="close-popover">
+    <span class="icon-small icon-cancel"></span>
+  </a>
+  Notifications
+</div>
+<div class="popover-content">
+  {{#if activity}}
+  {{#each activity}}
+  <div class="activity-wrapper">
+    <span class="icon-member icon-xlarge"></span>
+    <div class="activity-content">
+      {{#if listName}}
+      <strong>{{user}}</strong> {{text}} the card 
+      <a href="/cards/{{formatCardUrl cardId cardTitle}}">{{cardTitle}}</a> to {{listName}} on My New Board 
+      {{else}}
+      <strong>{{user}}</strong> {{text}} the card 
+      <a href="/cards/{{formatCardUrl cardId cardTitle}}">{{cardTitle}}</a> on My New Board 
+      {{/if}}
+      <span class="notification-time">{{formatActivityTime createdAt}}</span>
+    </div>
+  </div>
+  {{/each}}
+  {{else}}
+  No notifications at this time.
+  {{/if}}
+</div>

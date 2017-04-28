@@ -91,11 +91,17 @@ header
       display: none
     input[type='text'].search-field.search-field-wide
       width: 380px
+      background: #ffffff
   .user-info
     position: absolute
     display: inline-block
     margin-right: 0px
     right: 5px
+  .notify-alert
+    background: #EB5A46
+    &:hover
+      background: #B04632 
+    
 
 main
   position: relative
@@ -224,9 +230,9 @@ main
   min-height: 10px
   z-index: 1
   overflow-y: auto
-  overlow-x: hidden
+  overflow-x: hidden
   flex: 1 1 auto
-
+  
 .card-wrapper
   position: relative
   max-width: 300px
@@ -245,6 +251,46 @@ main
   padding: 6px 6px 4px 8px
   overflow: hidden
   z-index: 10
+  .card-labels
+    padding-bottom: 5px
+    overflow: hidden
+  .card-label
+    float: left
+    width: 40px
+    height: 8px
+    margin: 0 5px 3px 0
+    border-radius: 3px
+  .green
+    background: #61BD4F
+  .yellow
+    background: #F2D600
+  .orange
+    background: #FFAB4A
+  .red
+    background: #EB5A46
+  .purple
+    background: #C377E0
+  .blue
+    background: #0079BF
+  .sky
+    background: #00C2E0
+  .lime
+    background: #51E898
+  .pink
+    background: #FF80CE
+  .black
+    background: #4d4d4d     
+  .none
+    background: #B6BBBF
+  .status-icons
+    margin-top: 5px
+    .icon-text
+      display: inline-block
+      font-size: 12px
+      color: #999999
+  .status-icons > span
+    margin-right: 10px
+    
   
 .card-title
   display: block
@@ -389,25 +435,38 @@ main
     margin-bottom: 5px
     font-weight: normal
     color: #999999
+  .modal-archived-msg
+    width: 100%
+    padding: 10px
+    margin: 0 0 15px -15px
+    background: #f7eb8f
+    border-radius: 3px
+    p
+      padding-left: 10px
+      margin-top: 5px
+    > .icon-archive
+      vertical-align: top
   .header
     positon: relative
     padding: 0 35px 5px 25px
     margin-bottom: 15px
-    .modal-header-icon
-      position: absolute
-      top: 20px
-      left: 15px
     > a
       position: absolute
       top: 10px
       right: 10px
       text-decoration: none
     .title
+      position: relative
       width: 100%
+      .modal-header-icon
+        position: absolute
+        top: 6px
+        left: -30px
       textarea
         width: 100%
         height: 30px
         padding: 5px
+        margin-left: -5px
         background: transparent
         font-weight: 700
         font-size: 18px
@@ -484,7 +543,6 @@ main
         textarea
           width: 100%
           min-height: 75px
-          // border-bottom: solid 30px transparent
     .card-activity
       margin-left: 25px
       .activity-header
@@ -552,10 +610,16 @@ main
       text-align: center
       background: #61BD4F
       border-radius: 3px
+  .card-modal-delete
+    color: #FFFFFF
+    background: #EB5A46
+    &:hover
+      background: #B04632
 
 .markdown
   h1
     font-size: 20px
+
     
 .popover
   position: absolute
@@ -744,16 +808,41 @@ main
       left: 14px
       text-shadow: 0 0 5px rgba(0, 0, 0, .2), 0 0 2px #000000
 
-.search-modal
+.search-modal, .notification-modal
   width: 600px
   height: 350px
-  margin-top: 10px
-  top: 30px
-  left: 94px
   overflow: hidden
   background: #EDEFF0
   box-sizing: border-box
   border-radius: 3px
+
+.search-modal
+  padding: 15px
+
+.search-results
+  li
+    padding: 10px 5px
+    text-align: left
+    
+.notification-modal
+  width: 450px
+  height: 260px
+  .activity-wrapper
+    padding-top: 10px
+    text-align: left
+    > .icon-member
+      display: inline-block
+      padding-right: 10px
+      vertical-align: top
+    .activity-content
+      display: inline-block
+      width: 395px
+      padding: 0 0 15px 0
+      border-bottom: 1px solid #E3E4E5
+      color: #4D4D4D
+      .notification-time
+        font-size: 12px
+        color: #999999
 
 // icons
 
@@ -892,6 +981,10 @@ main
 .icon-refresh
   &:before
     content: icons.refresh
+    
+.icon-delete
+  &:before
+    content: icons.delete
 
 .icon-search
   &:before
@@ -941,7 +1034,7 @@ main
 .icon-small
   width: 18px
   height: 18px
-  line-height: 16px
+  line-height: 18px
   font-size: 12px
   
 .icon-xlarge

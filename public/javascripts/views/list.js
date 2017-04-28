@@ -37,7 +37,10 @@ var ListView = Backbone.View.extend({
     this.$('.list-header').after(this.cardsView.el);
   },
   getListCards: function() {
-    return App.cards.where({ listId: this.model.get('id') }).sort(function(a, b) {
+    return App.cards.where({ 
+      listId: this.model.get('id'),
+      archived: false,
+    }).sort(function(a, b) {
       return a.get('position') - b.get('position');
     });
   },
