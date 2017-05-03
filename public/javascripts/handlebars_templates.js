@@ -1,7 +1,37 @@
 this["JST"] = this["JST"] || {};
 
+this["JST"]["archive"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return "<ul class=\"archived-lists\">"
+    + ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.lists : depth0),{"name":"each","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "</ul>";
+},"2":function(container,depth0,helpers,partials,data) {
+    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+
+  return "<li><p>"
+    + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
+    + "</p><a href=\"#\" class=\"send-to-board\" data-id="
+    + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
+    + "><span class=\"icon-refresh icon-small\"></span>Send to Board</a></li>";
+},"4":function(container,depth0,helpers,partials,data) {
+    return "No archived lists";
+},"6":function(container,depth0,helpers,partials,data) {
+    return "<div class=\"archived-cards\"></div>";
+},"8":function(container,depth0,helpers,partials,data) {
+    return "No archived cards";
+},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1, alias1=depth0 != null ? depth0 : {};
+
+  return "<div class=\"popover-header\"><a href=\"#\" class=\"close-popover\"><span class=\"icon-small icon-cancel\"></span></a>Archive</div><div class=\"popover-content\"><div class=\"archive-wrapper\"><h4>Archived Lists</h4>"
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.lists : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(4, data, 0),"data":data})) != null ? stack1 : "")
+    + "<h4>Archived Cards</h4>"
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.cards : depth0),{"name":"if","hash":{},"fn":container.program(6, data, 0),"inverse":container.program(8, data, 0),"data":data})) != null ? stack1 : "")
+    + "</div></div>";
+},"useData":true});
+
 this["JST"]["board"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div class=\"board-wrapper\"><div class=\"board-content\"><div class=\"board-header\"><a class=\"button board-title\" href=\"#\">My New Board</a><a class=\"button board-starred\" href=\"#\"><span class=\"icon-small icon-star light\"></span></a><a class=\"button board-visibility\" href=\"#\"><span class=\"icon-small icon-private light\"></span><p>Private</p></a><a class=\"button board-menu\" href=\"#\"><span class=\"icon-small icon-more light\"></span><p>Show Menu</p></a></div><div class=\"board-lists\"><div id=\"board\"><div class=\"list-wrapper add-list\"><div class=\"overlay\"></div><div class=\"add-list-placeholder\"><p>Add a list</p></div><form class=\"add-list-form list\"><input type=\"text\" name=\"name\" placeholder=\"Add a list...\" /><div class=\"add-list-controls\"><input type=\"submit\" value=\"Save\" class=\"submit-btn\" /><a href=\"#\" class=\"cancel-btn\"><span class=\"icon-large cancel-btn icon-cancel\"></span></a></div></form></div></div></div></div></div>";
+    return "<div class=\"board-content\"><div class=\"board-header\"><a class=\"button board-title\" href=\"#\">My New Board</a><a class=\"button board-starred\" href=\"#\"><span class=\"icon-small icon-star light\"></span></a><a class=\"button board-visibility\" href=\"#\"><span class=\"icon-small icon-private light\"></span><p>Private</p></a><a class=\"button board-archive\" href=\"#\"><span class=\"icon-small icon-more light\"></span><p>Show Archive</p></a></div><div class=\"board-lists\"><div id=\"board\"><div class=\"list-wrapper add-list\"><div class=\"add-list-placeholder\"><p>Add a list</p></div><form class=\"add-list-form list\"><input type=\"text\" name=\"name\" placeholder=\"Add a list...\" /><div class=\"add-list-controls\"><input type=\"submit\" value=\"Save\" class=\"submit-btn\" /><a href=\"#\" class=\"cancel-btn\"><span class=\"icon-large cancel-btn icon-cancel\"></span></a></div></form></div></div></div></div>";
 },"useData":true});
 
 this["JST"]["card_modal_labels"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
@@ -108,7 +138,7 @@ this["JST"]["comment"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":f
     + alias4(((helper = (helper = helpers.text || (depth0 != null ? depth0.text : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"text","hash":{},"data":data}) : helper)))
     + "</div><p>"
     + alias4((helpers.formatDateTime || (depth0 && depth0.formatDateTime) || alias2).call(alias1,(depth0 != null ? depth0.dateTime : depth0),{"name":"formatDateTime","hash":{},"data":data}))
-    + " - <a href=\"#\" class=\"edit-comment\">Edit</a> - <a href=\"#\" class=\"delete-comment\">Delete</a></p></div>";
+    + " - <a href=\"#\" class=\"delete-comment\">Delete</a></p></div>";
 },"useData":true});
 
 this["JST"]["copy_card"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
@@ -165,6 +195,16 @@ this["JST"]["labels"] = Handlebars.template({"1":function(container,depth0,helpe
     + "</div>";
 },"useData":true});
 
+this["JST"]["list_actions"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
+    return "<div class=\"list-subscribe-active\"><span class=\"icon-small icon-check selected-color light\"></span></div>";
+},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return "<div class=\"popover-header\"><a href=\"#\" class=\"close-popover\"><span class=\"icon-small icon-cancel\"></span></a>List Actions</div><div class=\"popover-content\"><div class=\"list-actions-wrapper\"><ul><!-- <li><a href=\"#\" class=\"list-subscribe\">Subscribe</a>"
+    + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.subscribed : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "</li> --><li><a href=\"#\" class=\"list-archive\">Archive This List</a></li></ul></div></div>";
+},"useData":true});
+
 this["JST"]["list"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var helper;
 
@@ -204,7 +244,7 @@ this["JST"]["move_card"] = Handlebars.template({"1":function(container,depth0,he
 },"useData":true});
 
 this["JST"]["newCard"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div class=\"new-card-form\"><div class=\"card-wrapper\"><div class=\"card-content\"><textarea class=\"new-card-textarea\"></textarea></div></div><div class=\"new-card-controls\"><input type=\"submit\" value=\"Add\" class=\"submit-btn\" /><a href=\"#\" class=\"cancel-btn\"><span class=\"icon-large cancel-btn icon-cancel\"></span></a></div></div>";
+    return "<div class=\"new-card-form\"><div class=\"card-wrapper\"><div class=\"card-content\"><textarea class=\"new-card-textarea\"></textarea></div></div><div class=\"new-card-controls\"><input type=\"submit\" value=\"Add\" class=\"submit-btn submit-new-card\" /><a href=\"#\" class=\"cancel-btn\"><span class=\"icon-large cancel-btn icon-cancel\"></span></a></div></div>";
 },"useData":true});
 
 this["JST"]["notifications"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {

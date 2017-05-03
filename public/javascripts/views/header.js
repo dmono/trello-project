@@ -15,20 +15,23 @@ var HeaderView = Backbone.View.extend({
     offset.left -= 421;
 
     App.trigger('viewNotifications', offset, height);
-    $(e.currentTarget).toggleClass('notify-alert');
   },
-  notificationsAlert: function() {
-    this.$('.notifications-btn').toggleClass('notify-alert');
+  notificationsAlert: function(unreadNotifications) {
+    if (unreadNotifications) {
+      this.$('.notifications-btn').addClass('notify-alert');
+    } else {
+      this.$('.notifications-btn').removeClass('notify-alert');
+    }
   },
   search: function(e) {
     var offset = $(e.currentTarget).offset();
     var height = $(e.currentTarget).height();
 
     if ($(e.currentTarget).val().length > 2 && $('.popover:hidden')) {
-      this.trigger('openSearch', offset, height);
+      App.trigger('openSearch', offset, height);
     }
 
-    this.trigger('performSearch', e.currentTarget.value);
+    App.trigger('performSearch', e.currentTarget.value);
   },
   updateSearchField: function(e) {
     var $field = $(e.currentTarget);
@@ -53,6 +56,5 @@ var HeaderView = Backbone.View.extend({
   },
   initialize: function() {
     this.render();
-    this.listenTo(App.notifications, 'update', this.notificationsAlert());
   },
 });

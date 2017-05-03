@@ -1,4 +1,10 @@
 var Notifications = Backbone.Collection.extend({
+  url: '/notifications',
+  model: Notification,
+  addNew: function(activity) {
+    var notification = activity.clone().unset('id').set('viewed', false);
+    this.create(notification.toJSON(), { wait: true });
+  },
   formatData: function() {
     var data = this.toJSON();
 
@@ -11,6 +17,8 @@ var Notifications = Backbone.Collection.extend({
         activity.text = 'removed the due date on';
       } else if (activity.type === 'archived') {
         activity.text = 'archived';
+      } else if (activity.type === 'unarchived') {
+        activity.text = 'unarchived';
       } else if (activity.type === 'moved card') {
         activity.text = 'moved';
         activity.listName = App.lists.get(activity.listId).get('name');
@@ -18,7 +26,7 @@ var Notifications = Backbone.Collection.extend({
     });
 
     return data.sort(function(a, b) {
-      return new Date(b.createdAt) - new Date(a.createdAt);
+      return b.id - a.id;
     });
   },
 });

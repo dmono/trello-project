@@ -2,20 +2,22 @@ var App = {
   templates: JST,
   indexView: function() {
     if (this.cardDetailsView) {
-      this.cardDetailsView.closeModal();
+      this.cardDetailsView.remove();
+      this.cardDetailsView.close();
     }
     this.renderBoard();
-    this.headerView = new HeaderView();
-    this.bindEvents();
-    this.searchResults = new Filter({ collection: this.cards });
-    this.notifications = new Notifications(this.getNotifications());
   },
   renderBoard: function() {
+    if (this.boardView) {
+      this.boardView.remove();
+    }
+
     this.boardView = new BoardView({
       collection: this.lists,
     });
 
     this.boardView.render();
+    $('main').html(this.boardView.el);
   },
   cardModalView: function(id) {
     id = Number(id.split('-')[0]);
@@ -34,6 +36,26 @@ var App = {
   closeModal: function() {
     $('.modal-overlay').hide();
     router.navigate('', { trigger: true });
+  },
+  closeModalByOverlay: function(e) {
+    if (e.target === e.currentTarget) {
+      this.closeModal();
+    }
+  },
+  displayArchiveMenu: function(offset, height) {
+    this.archiveView = new ArchivePopoverView({
+      offset: offset,
+      height: height,
+      lists: App.lists.where({ archived: true }),
+      cards: App.cards.where({ archived: true }),
+    });
+  },
+  displayListMenu: function(model, offset, height) {
+    this.listActionsView = new ListPopoverView({
+      model: model,
+      offset: offset,
+      height: height,
+    });
   },
   displayLabelsMenu: function(model, offset, height) {
     this.labelsView = new LabelsPopoverView({
@@ -74,7 +96,10 @@ var App = {
   closeSearch: function() {
     this.headerView.resetSearchField();
     $('.popover').removeClass('search-modal').hide();
-    this.searchView.remove();
+
+    if (this.searchView) {
+      this.searchView.remove();
+    }
   },
   search: function(query) {
     this.searchResults.set('query', query);
@@ -86,6 +111,8 @@ var App = {
       offset: offset,
       height: height,
     });
+
+    this.headerView.notificationsAlert(false);
   },
   getNotifications: function() {
     var results = [];
@@ -95,38 +122,66 @@ var App = {
       archived: false,
     });
 
-    subscribedCards.forEach(function(model) {
-      results.push(self.activityLog.where({ cardId: model.id }));
+    subscribedCards.forEach(function(card) {
+      results.push(self.activityLog.filter(function(activity) {
+        return card.id === activity.get('cardId') &&
+          new Date(activity.get('createdAt')) > new Date(card.get('subscribedAt'));
+      }));
     });
 
     return _.flatten(results);
   },
-  checkForNotifications: function() {
-    this.notifications.add(this.getNotifications());
+  checkNotifications: function() {
+    if (this.notifications.where({ viewed: false })) {
+      this.headerView.notificationsAlert(true);
+    }
+  },
+  updateActivity: function(model, value, options) {
+    this.activityLog.addToLog(model, value, options, this.cards);
+  },
+  updateNotifications: function(activity) {
+    if (App.cards.get(activity.get('cardId')).get('subscribed')) {
+      this.notifications.addNew(activity);
+    }
   },
   bindEvents: function() {
     _.extend(this, Backbone.Events);
-    //this.listenTo(this.cards, 'add', this.renderBoard.bind(this));
-    // this.listenTo(this.cards, 'update', this.boardView.render);
-    // need this because the view renders before the positions are updated
-    this.on('cardsModified', this.renderBoard.bind(this));
+    // need this because the view renders before the positions are updated in copy card mode
+    this.on('listModified', this.renderBoard);
+    this.on('listMoved', this.lists.updatePositions.bind(this.lists));
+    this.on('unarchiveList', this.lists.unarchive.bind(this.lists));
+    this.on('cardsModified', this.renderBoard);
     this.on('cardMoved', this.cards.updatePositions.bind(this.cards));
     this.on('cardCopied', this.cards.copyCard.bind(this.cards));
     this.on('changeCardList', this.cards.updateListId.bind(this.cards));
     this.on('addNewCard', this.cards.addCard.bind(this.cards));
-    this.on('viewLabels', this.displayLabelsMenu.bind(this));
-    this.on('viewDueDate', this.displayDueDateMenu.bind(this));
-    this.on('viewMoveCard', this.displayMoveMenu.bind(this));
-    this.on('viewCopyCard', this.displayCopyMenu.bind(this));
+    this.on('viewArchive', this.displayArchiveMenu);
+    this.on('viewListActions', this.displayListMenu);
+    this.on('viewLabels', this.displayLabelsMenu);
+    this.on('viewDueDate', this.displayDueDateMenu);
+    this.on('viewMoveCard', this.displayMoveMenu);
+    this.on('viewCopyCard', this.displayCopyMenu);
     this.on('closeModal', this.closeModal);
-    this.on('closeSearch', this.closeSearch.bind(this));
-    this.on('viewNotifications', this.displayNotifications.bind(this));
-    this.listenTo(this.headerView, 'openSearch', this.displaySearch);
-    this.listenTo(this.headerView, 'performSearch', this.search);
-    this.listenTo(this.activityLog, 'add', this.checkForNotifications);
+    this.on('closeSearch', this.closeSearch);
+    this.on('viewNotifications', this.displayNotifications);
+    this.on('newComment', this.comments.addComment.bind(this.comments));
+    this.on('openSearch', this.displaySearch);
+    this.on('performSearch', this.search);
+    this.listenTo(this.lists, 'add', this.renderBoard);
+    this.listenTo(this.cards, 'change:dueDate change:listId change:archived', 
+      this.updateActivity);
+    this.listenTo(this.cards, 'change:labels change:subscribed change:description change:dueDate change:archived', 
+      this.renderBoard);
+    this.listenTo(this.comments, 'add', this.renderBoard);
+    this.listenTo(this.comments, 'add', this.updateActivity);
+    this.listenTo(this.activityLog, 'add', this.updateNotifications);
+    this.listenTo(this.notifications, 'add', this.checkNotifications)
+    $('body').on('click', '.modal-overlay', this.closeModalByOverlay.bind(this));
   },
   init: function() {
-    // this.bindEvents();
+    this.searchResults = new Filter({ collection: this.cards.where({ archived: false }) });
+    this.headerView = new HeaderView();
+    this.bindEvents();
   }
 };
 
@@ -143,7 +198,6 @@ Handlebars.registerHelper('formatShortDueDate', function(dateTime) {
 Handlebars.registerHelper('formatActivityTime', function(dateTime) {
   var dateObj = moment(dateTime);
   return dateObj.fromNow();
-  //return dateObj.calendar();
 });
 
 Handlebars.registerHelper('formatCardUrl', function(id, title) {

@@ -3,7 +3,7 @@ var PopoverView = Backbone.View.extend({
   events: {
     'click .close-popover': 'close',
   },
-  // next 3 methods used in move card and copy card
+  // next 3 methods used for move card and copy card actions
   setPositionList: function() {
     var listId = Number(this.$('#list-options').find(':selected').val());
     var $positionList = this.$('#position-options');
@@ -30,9 +30,11 @@ var PopoverView = Backbone.View.extend({
     return _.range(1, App.cards.where({ listId: listId }).length + offset);
   },
   setPlacement: function(elementOffset, elementHeight) {
-    var totalHeight = elementOffset.top + elementHeight + 25 + this.$el.height();
+    var minTopOffset = 25;
+    var defautTopOffset = 100;
+    var totalHeight = elementOffset.top + elementHeight + minTopOffset + this.$el.height();
     var windowHeight = $(window).height();
-    var top = totalHeight > windowHeight ? 100 : elementOffset.top + elementHeight + 25;
+    var top = totalHeight > windowHeight ? defautTopOffset : elementOffset.top + elementHeight + minTopOffset;
 
     this.$el.parent().offset({
       top: top,
@@ -41,8 +43,13 @@ var PopoverView = Backbone.View.extend({
   },
   close: function(e) {
     if (e) { e.preventDefault(); }
+
     this.$el.parent().offset({ top: 0, left: 0 }).hide();
+    $('.popover-overlay').hide();
     this.remove();
+  },
+  showOverlay: function() {
+    $('.popover-overlay').show();
   },
   showPopover: function() {
     $('.popover').empty().append(this.el);
@@ -50,6 +57,7 @@ var PopoverView = Backbone.View.extend({
     this.setPlacement(this.elementOffset, this.elementHeight);
   },
   initialize: function(options) {
+    $('.popover-overlay').on('click', this.close.bind(this));
     this.elementOffset = options.offset;
     this.elementHeight = options.height;
     this.render();

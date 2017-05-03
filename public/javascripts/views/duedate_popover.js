@@ -75,6 +75,7 @@ var DueDatePopoverView = PopoverView.extend({
     PopoverView.prototype.render.call(this);
     this.displayDatePicker();
     this.setDateTime();
+    this.showOverlay();
     this.showPopover();
   },
 });

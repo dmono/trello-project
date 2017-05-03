@@ -4,6 +4,7 @@ var Card = Backbone.Model.extend({
     dueDate: '',
     labels: '',
     subscribed: false,
+    subscribedAt: '',
     archived: false,
   },
 });

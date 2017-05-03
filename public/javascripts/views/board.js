@@ -1,10 +1,20 @@
 var BoardView = Backbone.View.extend({
-  el: $('main')[0],
+  className: 'board-wrapper',
   template: App.templates.board,
   events: {
     'click .add-list-placeholder': 'displayAddListForm',
     'submit form.add-list-form': 'addNewList',
     'click a.cancel-btn': 'closeAddListForm',
+    'click .board-archive': 'displayArchive',
+  },
+  displayArchive: function(e) {
+    e.preventDefault();
+    var offset = $(e.currentTarget).offset();
+    var height = $(e.currentTarget).height();
+
+    offset.left -= 183;
+
+    App.trigger('viewArchive', offset, height);
   },
   addNewList: function(e) {
     e.preventDefault();
@@ -15,7 +25,9 @@ var BoardView = Backbone.View.extend({
     this.collection.create({
       name: name,
       position: newPosition,
+      archived: false,
     }, { 
+      wait: true,
       success: function() {
         self.$('a.cancel-btn').trigger('click');
       },
@@ -24,31 +36,19 @@ var BoardView = Backbone.View.extend({
   displayAddListForm: function(e) {
     $(e.target).closest('div').hide();
     this.$('.add-list-form').slideDown(100);
-
-    this.$('.overlay').show();
+    this.$('.add-list-form > input').focus();
   },
   closeAddListForm: function(e) {
     e.preventDefault();
-
-    if ($('.add-list-form').is(':visible')) {
-      $('.add-list-form').find("input[name='name']").val('');
-      $('.add-list-form').hide();
-      $('.add-list-placeholder').show();
-      this.$('.overlay').hide();
-    }
-  },
-  updatePositions: function() {
-    var listPositions = this.$('#board').sortable('toArray', { attribute: 'data-id' });
-    var position;
-
-    this.collection.each(function(list) {
-      position = listPositions.indexOf(String(list.id)) + 1
-      list.save({ position: position });
-    });
+    this.$('.add-list-form').find("input[name='name']").val('');
+    this.$('.add-list-form').slideUp(100);
+    this.$('.add-list-placeholder').delay(100).show(0);
   },
   makeSortable: function() {
     var self = this;
-    this.$('#board').sortable({
+    var sortableList = this.$('#board');
+
+    sortableList.sortable({
       items: '> div:not(.add-list)',
       placeholder: 'list-placeholder',
       handle: '.list-header',
@@ -56,34 +56,36 @@ var BoardView = Backbone.View.extend({
       containment: 'window',
       appendTo: 'body',
       zIndex: 9999,
-      // helper: 'clone',
+      helper: 'clone',
       start: function(e, ui) {
-        ui.placeholder.height(ui.item.find('.list').height());
-        ui.item.addClass('tilt');
-      },
-      stop: function(e, ui) {
-        ui.item.removeClass('tilt');
+        ui.placeholder.height(ui.helper.find('.list').height());
+        ui.helper.addClass('tilt');
       },
       update: function(e, ui) {
-        self.updatePositions();
+        var listId = ui.item.attr('data-id');
+        var newPositions = sortableList.sortable('toArray', { attribute: 'data-id' });
+        var position = _.indexOf(newPositions, listId) + 1;
+
+        self.collection.updatePositions(listId, false, position);
       },
     }).disableSelection();
   },
   renderList: function(item) {
-    var listView = new ListView({
-      model: item,
-    });
+    if (!item.get('archived')) {
+      var listView = new ListView({
+        model: item,
+      });
 
-    this.$('.add-list').before(listView.el);
+      this.$('.add-list').before(listView.el);
+    }
   },
   render: function() {
     this.$el.html(this.template());
     this.$('.list-wrapper').not('.add-list').remove();
-    this.collection.each(this.renderList.bind(this));
+    this.collection.forEach(this.renderList.bind(this));
     this.makeSortable();
   },
   initialize: function() {
-    this.collection.view = this;
     this.listenTo(this.collection, 'add', this.render);
   },
 });

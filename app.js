@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var stylus = require('stylus');
 var nib = require('nib');
 
-var index = require('./routes/index');
+var index = require('./routes/router');
 var app = express();
 
 // view engine setup

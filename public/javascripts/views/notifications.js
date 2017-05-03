@@ -14,6 +14,7 @@ var NotificationsView = PopoverView.extend({
   },
   render: function() {
     this.$el.html(this.template({ activity: this.collection.formatData() }));
+    this.showOverlay();
     this.showPopover();
   },
 });

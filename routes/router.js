@@ -29,6 +29,11 @@ var activityLogApi = Object
     .create(require(path.resolve(path.dirname(__dirname), moduleFile)))
     .init(activityLogFilePath);
 
+var notificationsFilePath = path.resolve(path.dirname(__dirname), 'data/notifications.json');
+var notificationsApi = Object
+    .create(require(path.resolve(path.dirname(__dirname), moduleFile)))
+    .init(notificationsFilePath);
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', {
@@ -37,6 +42,7 @@ router.get('/', function(req, res, next) {
     comments: commentsApi.tempStore.data,
     labels: labelsApi.tempStore.data,
     activityLog: activityLogApi.tempStore.data,
+    notifications: notificationsApi.tempStore.data,
   });
 });
 
@@ -93,6 +99,7 @@ router.route('/cards/:id')
       comments: commentsApi.tempStore.data,
       labels: labelsApi.tempStore.data,
       activityLog: activityLogApi.tempStore.data,
+      notifications: notificationsApi.tempStore.data,
     });
   })
   .put(function(req, res, next) {
@@ -182,7 +189,7 @@ router.route('/activity')
     res.json(_(activityLog.data).findWhere({ id: activityLog.lastId }));
   });
 
-router.route('/activityLog/:id')
+router.route('/activity/:id')
   .put(function(req, res, next) {
     activityLogApi.put(req.body);
     activityLogApi.record();
@@ -192,6 +199,35 @@ router.route('/activityLog/:id')
     const id = req.params.id;
     activityLogApi.delete(id);
     activityLogApi.record();
+    res.json({});
+  });
+
+router.route('/notifications')
+  .get(function(req, res, next) {
+    res.json(notificationsApi.tempStore.data);
+  })
+  .post(function(req, res, next) {
+    let notifications;
+    if (Object.keys(req.body).length > 0) {
+      notifications = notificationsApi.set(req.body);
+      notificationsApi.record();
+    } else {
+      notifications = notificationsApi.tempStore;
+    }
+
+    res.json(_(notifications.data).findWhere({ id: notifications.lastId }));
+  });
+
+router.route('/notifications/:id')
+  .put(function(req, res, next) {
+    notificationsApi.put(req.body);
+    notificationsApi.record();
+    res.json({});
+  })
+  .delete(function(req, res, next) {
+    const id = req.params.id;
+    notificationsApi.delete(id);
+    notificationsApi.record();
     res.json({});
   });
 

@@ -1,9 +1,9 @@
 var ActivityLog = Backbone.Collection.extend({
   model: Activity,
   url: '/activity',
-  addToLog: function(model, collection, options) {
+  addToLog: function(model, newValue, options, cards) {
     var cardId = options.activityType === 'add comment' ? model.get('cardId') : model.id;
-    var cardTitle = App.cards.get(cardId).get('title');
+    var cardTitle = cards.get(cardId).get('title');
 
     this.create({
       user: 'Trello User',
@@ -35,8 +35,4 @@ var ActivityLog = Backbone.Collection.extend({
 
     return data;
   },
-  initialize: function() {
-    this.listenTo(App.comments, 'add', this.addToLog);
-    this.listenTo(App.cards, 'change:dueDate change:listId change:archived', this.addToLog);
-  }
 });

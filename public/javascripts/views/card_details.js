@@ -2,7 +2,7 @@ var CardDetailsView = Backbone.View.extend({
   className: 'card-details-wrapper',
   template: App.templates.card_modal,
   events: {
-    'click a.close-modal': 'closeModal',
+    'click .close-modal': 'close',
     'blur .header textarea': 'updateTitle',
     'click .save-description': 'updateDescription',
     'click a.close-description': 'closeDescriptionEdit',
@@ -17,12 +17,11 @@ var CardDetailsView = Backbone.View.extend({
     'click .current-list a': 'displayMove',
     'click .subscribe-btn': 'setSubscribe',
     'click .archive-btn': 'archiveCard',
-    'click .send-to-board-btn': 'archiveCard',
+    'click .send-to-board-btn': 'sendToBoard',
     'click .card-modal-delete': 'deleteCard',
   },
-  closeModal: function(e) {
+  close: function(e) {
     if (e) { e.preventDefault() }
-    this.remove();
     App.trigger('closeModal');
   },
   triggerPopoverView: function(e, type) {
@@ -53,22 +52,18 @@ var CardDetailsView = Backbone.View.extend({
   },
   setSubscribe: function(e) {
     e.preventDefault();
-    this.model.save('subscribed', !this.model.get('subscribed'));
+    var status = this.model.get('subscribed');
+    this.model.save({ subscribed: !status }, { wait: true });
   },
   addComment: function(e) {
     e.preventDefault();
-    var newComment = {};
-    newComment.text = $(e.target).closest('.new-comment').find('textarea').val();
+    var text = $(e.target).closest('.new-comment').find('textarea').val();
 
-    if (newComment.text) {
-      newComment.dateTime = new Date();
-      newComment.user = 'Trello User';
-      newComment.cardId = this.model.get('id');
-
-      App.comments.create(newComment, { activityType: 'add comment' });
+    if (text) {
+      App.trigger('newComment', this.model.id, text);
+      $(e.target).closest('.new-comment').find('textarea').val('');
+      this.render();
     }
-
-    $(e.target).closest('.new-comment').find('textarea').val('');
   },
   updateTitle: function(e) {
     var input = $(e.target).val();
@@ -79,7 +74,8 @@ var CardDetailsView = Backbone.View.extend({
   updateDescription: function(e) {
     e.preventDefault();
     var $textarea = $(e.target).closest('.edit-description').find('textarea');
-    this.model.save({ description: $textarea.val() });
+    this.model.save({ description: $textarea.val() }, { wait: true });
+
     $textarea.val('');
     this.displayDescription();
     this.closeDescriptionEdit();
@@ -120,12 +116,33 @@ var CardDetailsView = Backbone.View.extend({
   },
   archiveCard: function(e) {
     e.preventDefault();
-    this.model.save({ 'archived': !this.model.get('archived') }, { activityType: 'archive' });
+    this.model.save({ 'archived': true }, {
+      wait: true,
+      activityType: 'archived',
+      success: function(model) {
+        App.trigger('cardMoved', model.get('listId'), model.id);
+      }
+    });
+  },
+  sendToBoard: function(e) {
+    e.preventDefault();
+    this.model.save({
+      archived: false,
+      position: App.cards.where({ listId: this.model.get('listId') }).length + 1,
+    }, {
+      wait: true,
+      activityType: 'unarchived',
+    });
   },
   deleteCard: function(e) {
     e.preventDefault();
-    this.model.destroy();
-    this.closeModal();
+    this.model.destroy({
+      wait: true,
+      success: function(model) {
+        console.log(model);
+      }
+     });
+    this.close();
   },
   getCurrentList: function() {
     return App.lists.get(this.model.get('listId')).get('name');
@@ -163,10 +180,10 @@ var CardDetailsView = Backbone.View.extend({
 
     this.renderComments(); 
   },
-  initialize: function() {
+  initialize: function(options) {
+    this.listenTo(this.model, 'change', this.render);
+    this.listenTo(App.comments, 'update', this.render);
+    this.listenTo(App.labels, 'change update', this.render);
     this.render();
-    this.listenTo(this.model, 'change', this.render.bind(this));
-    this.listenTo(App.comments, 'update', this.render.bind(this));
-    this.listenTo(App.labels, 'change update', this.render.bind(this));
   }
 });

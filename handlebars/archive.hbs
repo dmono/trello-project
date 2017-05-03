@@ -1,0 +1,32 @@
+<div class="popover-header">
+  <a href="#" class="close-popover">
+    <span class="icon-small icon-cancel"></span>
+  </a>
+  Archive
+</div>
+<div class="popover-content">
+  <div class="archive-wrapper">
+    <h4>Archived Lists</h4>
+    {{#if lists}}
+    <ul class="archived-lists">
+      {{#each lists}}
+      <li>
+        <p>{{name}}</p>
+        <a href="#" class="send-to-board" data-id={{id}}>
+          <span class="icon-refresh icon-small"></span>
+          Send to Board
+        </a>
+      </li>
+      {{/each}}
+    </ul>
+    {{else}}
+    No archived lists
+    {{/if}}
+    <h4>Archived Cards</h4>
+    {{#if cards}}
+    <div class="archived-cards"></div>
+    {{else}}
+    No archived cards
+    {{/if}}
+  </div>
+</div>

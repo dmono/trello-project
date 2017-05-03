@@ -1,19 +1,4 @@
 var CardsView = Backbone.View.extend({
-  events: {
-    'click .submit-btn': 'addCard',
-    'click .cancel-btn': 'closeForm',
-  },
-  addCard: function(e) {
-    e.preventDefault();
-    var title = $(e.target).parent().parent().find('textarea').val();
-    var listId = $(e.target).parent().parent().closest('.list-wrapper').attr('data-id');
-    App.trigger('addNewCard', title, listId);
-  },
-  closeForm: function() {
-    $('.new-card-form').filter(':visible').find('textarea').val('');
-    $('.new-card-form').filter(':visible').hide();
-    $('.add-new-card').filter(':hidden').show();
-  },
   updateCardPositions: function(listId) {
     var cardPositions = this.$el.sortable('toArray', { attribute: 'data-id' });
     var position;
@@ -70,6 +55,5 @@ var CardsView = Backbone.View.extend({
   initialize: function() {
     this.render();
     this.makeSortable();
-    this.listenTo(App.cards, 'add', this.closeForm);
   },
 });

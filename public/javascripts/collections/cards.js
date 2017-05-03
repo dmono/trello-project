@@ -3,7 +3,9 @@ var Cards = Backbone.Collection.extend({
   model: Card,
   updateListId: function(id, newListId) {
     var card = this.get(id);
-    card.save({ listId: Number(newListId) }, { activityType: 'moved card' });
+    card.save({ listId: Number(newListId) }, {
+      activityType: 'moved card',
+    });
   },
   updatePositions: function(listId, cardId, menuMove, position) {
     var cards = this.where({ listId: Number(listId) }).sort(function(a, b) {
@@ -17,7 +19,7 @@ var Cards = Backbone.Collection.extend({
     }
 
     cards.forEach(function(card, idx) {
-      card.save({ position: idx + 1 });
+      card.save({ position: idx + 1 }, { wait: true });
     });
 
     if (menuMove) {
@@ -45,6 +47,7 @@ var Cards = Backbone.Collection.extend({
       listId: Number(listId),
       position: position,
     }, { 
+      wait: true,
       success: function() {
         App.trigger('cardsModified');
       },

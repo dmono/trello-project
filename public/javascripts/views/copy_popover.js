@@ -18,6 +18,7 @@ var CopyPopoverView = PopoverView.extend({
     this.$el.html(this.template({ lists: this.listsValues() }));
     this.$('textarea').text(this.model.get('title'));
     this.setPositionList();
+    this.showOverlay();
     this.showPopover();
   },
 });

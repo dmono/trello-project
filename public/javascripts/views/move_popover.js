@@ -22,6 +22,7 @@ var MovePopoverView = PopoverView.extend({
   render: function() {
     this.$el.html(this.template({ lists: this.listsValues() }));
     this.setPositionList();
+    this.showOverlay();
     this.showPopover();
   },
 });

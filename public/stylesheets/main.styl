@@ -141,7 +141,7 @@ main
     font-weight: 700
     color: #ffffff
     text-decoration: none
-  .board-menu
+  .board-archive
     position: absolute
     margin-right: 0px
     right: 8px
@@ -397,7 +397,7 @@ main
   &:hover
     color: #4D4D4D
 
-.modal-overlay
+.modal-overlay, .popover-overlay
   display: none
   position: fixed
   top: 0
@@ -405,11 +405,16 @@ main
   bottom: 0
   left: 0
   justify-content: center
-  background: rgba(0, 0, 0, 0.5)
-  z-index: 25
   align-items: flex-start
   justify-content: center
   overflow: auto
+  
+.modal-overlay
+  background: rgba(0, 0, 0, 0.5)
+  z-index: 25
+  
+.popover-overlay
+  z-index: 200
 
 .comment-bg
   padding: 10px
@@ -427,6 +432,7 @@ main
   padding: 15px
   margin: 45px 0 50px
   background: #edeff0
+  z-index: 100
   box-sizing: border-box
   border-radius: 3px
   p, h5
@@ -489,7 +495,7 @@ main
       margin: 0 0 20px 25px
       .card-modal-labels, .card-modal-due-date, .description
         margin-bottom: 25px
-      .card-modal-due-date > a
+      .card-modal-due-date > h5
         display: block
       .description
         a
@@ -579,27 +585,7 @@ main
     .add-buttons, .action-buttons
       margin-bottom: 20px
   .modal-button
-    position: relative
-    display: block
-    max-width: 300px
-    height: 34px
-    padding: 7px
-    margin-top: 7px
-    font-weight: 700
-    font-size: 15px
-    text-decoration: none
-    background: #ffffff
-    border: 1px solid #E2E4E6
-    border-bottom-color: #cdd2d4
-    border-radius: 3px
-    box-sizing: border-box
-    span
-      margin-right: 8px
-    &:hover
-      color: #ffffff
-      background: #298FCA
-      span
-        color:#ffffff
+    modal-button()
     .subscribe-active
       position: absolute
       width: 18px
@@ -690,6 +676,19 @@ main
     .controls
       clear: both
       margin-top: 10px
+
+.list-actions-wrapper
+  text-align: left
+  li > a
+    display: block
+    width: 100%
+    padding: 10px
+    margin-left: -10px
+    font-weight: 700
+    text-decoration: none
+    &:hover
+      background: #0079BF
+      color: #FFFFFF
 
 .label-wrapper
   margin-bottom: 5px
@@ -808,6 +807,22 @@ main
       left: 14px
       text-shadow: 0 0 5px rgba(0, 0, 0, .2), 0 0 2px #000000
 
+.archive-wrapper
+  text-align: left
+  h4
+    padding-bottom: 10px
+  h4:last-of-type
+    margin-top: 20px
+  ul
+    margin-bottom: 20px
+  p
+    display: inline-block
+    width: 135px
+  .send-to-board
+    modal-button()
+    display: inline-block
+    background: #FFFFFF
+
 .search-modal, .notification-modal
   width: 600px
   height: 350px
@@ -826,7 +841,9 @@ main
     
 .notification-modal
   width: 450px
-  height: 260px
+  height: 410px
+  .popover-content
+    height: 400px
   .activity-wrapper
     padding-top: 10px
     text-align: left
