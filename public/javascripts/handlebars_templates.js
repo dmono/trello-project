@@ -1,12 +1,6 @@
 this["JST"] = this["JST"] || {};
 
 this["JST"]["archive"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
-    var stack1;
-
-  return "<ul class=\"archived-lists\">"
-    + ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.lists : depth0),{"name":"each","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "</ul>";
-},"2":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
   return "<li><p>"
@@ -14,20 +8,12 @@ this["JST"]["archive"] = Handlebars.template({"1":function(container,depth0,help
     + "</p><a href=\"#\" class=\"send-to-board\" data-id="
     + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
     + "><span class=\"icon-refresh icon-small\"></span>Send to Board</a></li>";
-},"4":function(container,depth0,helpers,partials,data) {
-    return "No archived lists";
-},"6":function(container,depth0,helpers,partials,data) {
-    return "<div class=\"archived-cards\"></div>";
-},"8":function(container,depth0,helpers,partials,data) {
-    return "No archived cards";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var stack1, alias1=depth0 != null ? depth0 : {};
+    var stack1;
 
-  return "<div class=\"popover-header\"><a href=\"#\" class=\"close-popover\"><span class=\"icon-small icon-cancel\"></span></a>Archive</div><div class=\"popover-content\"><div class=\"archive-wrapper\"><h4>Archived Lists</h4>"
-    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.lists : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(4, data, 0),"data":data})) != null ? stack1 : "")
-    + "<h4>Archived Cards</h4>"
-    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.cards : depth0),{"name":"if","hash":{},"fn":container.program(6, data, 0),"inverse":container.program(8, data, 0),"data":data})) != null ? stack1 : "")
-    + "</div></div>";
+  return "<div class=\"popover-header\"><a href=\"#\" class=\"close-popover\"><span class=\"icon-small icon-cancel\"></span></a>Archive</div><div class=\"popover-content\"><div class=\"archive-wrapper\"><h4>Archived Lists</h4><ul class=\"archived-lists\">"
+    + ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.lists : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "</ul><h4>Archived Cards</h4><div class=\"archived-cards\"></div></div></div>";
 },"useData":true});
 
 this["JST"]["board"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {

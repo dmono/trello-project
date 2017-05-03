@@ -141,12 +141,11 @@ var App = {
   },
   updateNotifications: function(activity) {
     if (App.cards.get(activity.get('cardId')).get('subscribed')) {
-      this.notifications.addNew(activity);
+      this.notifications.addNew(activity.get('id'));
     }
   },
   bindEvents: function() {
     _.extend(this, Backbone.Events);
-    // need this because the view renders before the positions are updated in copy card mode
     this.on('listModified', this.renderBoard);
     this.on('listMoved', this.lists.updatePositions.bind(this.lists));
     this.on('unarchiveList', this.lists.unarchive.bind(this.lists));

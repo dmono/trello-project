@@ -1,3 +1,1 @@
-var List = Backbone.Model.extend({
-
-});
+var List = Backbone.Model.extend({});

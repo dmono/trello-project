@@ -5,6 +5,7 @@ var Cards = Backbone.Collection.extend({
     var card = this.get(id);
     card.save({ listId: Number(newListId) }, {
       activityType: 'moved card',
+      listId: newListId,
     });
   },
   updatePositions: function(listId, cardId, menuMove, position) {

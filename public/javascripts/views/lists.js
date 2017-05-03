@@ -85,7 +85,6 @@ var ListsView = Backbone.View.extend({
   initialize: function() {
     this.render();
     this.makeSortable();
-    this.collection.view = this;
     this.listenTo(this.collection, 'add', this.render);
   },
 });

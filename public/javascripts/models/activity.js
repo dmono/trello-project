@@ -1,2 +1,1 @@
-var Activity = Backbone.Model.extend({
-})
+var Activity = Backbone.Model.extend({})

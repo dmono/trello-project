@@ -1,1 +1,1 @@
-{"lastId":3,"data":[{"name":"List 1","position":1,"archived":false,"id":1},{"name":"List 2","position":3,"archived":false,"id":2},{"name":"Archive me","position":2,"archived":false,"id":3}]}
+{"lastId":3,"data":[{"name":"List 1","position":1,"archived":true,"id":1},{"name":"List 2ab","position":1,"archived":false,"id":2},{"name":"list 3","position":3,"archived":false,"id":3}]}
