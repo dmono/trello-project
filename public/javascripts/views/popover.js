@@ -15,11 +15,13 @@ var PopoverView = Backbone.View.extend({
     var self = this;
 
     App.lists.each(function(list) {
-      lists.push({
-        name: list.get('name'),
-        id: list.get('id'),
-        selected: list.get('id') === self.model.get('listId'),
-      });
+      if (!list.get('archived')) {
+        lists.push({
+          name: list.get('name'),
+          id: list.get('id'),
+          selected: list.get('id') === self.model.get('listId'),
+        });
+      }
     });
 
     return lists;

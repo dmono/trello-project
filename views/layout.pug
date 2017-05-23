@@ -10,7 +10,7 @@ html(lang='en-us')
     +javascript_include_tag('handlebars_templates')
 
   body
-    #surface
+    #app-content
       header
       main
 
@@ -23,7 +23,7 @@ html(lang='en-us')
     +javascript_include_tag('application')
     +javascript_include_tag('models/board', 'models/list', 'models/card', 'models/comment', 'models/filter', 'models/label', 'models/activity', 'models/notification')
     +javascript_include_tag('collections/lists', 'collections/cards', 'collections/comments', 'collections/labels', 'collections/activity_log', 'collections/notifications')
-    +javascript_include_tag('views/header', 'views/board', 'views/list', 'views/lists', 'views/card', 'views/cards', 'views/card_details', 'views/comment', 'views/popover', 'views/labels_popover', 'views/labels_edit', 'views/labels_select', 'views/duedate_popover', 'views/search', 'views/move_popover', 'views/copy_popover', 'views/notifications', 'views/list_actions', 'views/archive')
+    +javascript_include_tag('views/header', 'views/board', 'views/list', 'views/card', 'views/cards', 'views/card_details', 'views/comment', 'views/popover', 'views/labels_popover', 'views/labels_edit', 'views/labels_select', 'views/duedate_popover', 'views/search', 'views/move_popover', 'views/copy_popover', 'views/notifications', 'views/list_actions', 'views/archive')
     script(type='text/javascript').
       App.lists = new Lists(!{JSON.stringify(lists)});
       App.cards = new Cards(!{JSON.stringify(cards)});

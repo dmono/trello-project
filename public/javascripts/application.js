@@ -11,9 +11,9 @@ var App = {
     if (this.boardView) {
       this.boardView.remove();
     }
-
+    
     this.boardView = new BoardView({
-      collection: this.lists,
+      collection: this.lists.sort(),
     });
 
     this.boardView.render();
@@ -86,6 +86,8 @@ var App = {
     });
   },
   displaySearch: function(offset, height) {
+    this.setSearchFilter();
+
     $('.popover').addClass('search-modal');
     this.searchView = new SearchView({
       model: this.searchResults,
@@ -100,6 +102,9 @@ var App = {
     if (this.searchView) {
       this.searchView.remove();
     }
+  },
+  setSearchFilter: function() {
+    this.searchResults = new Filter({ collection: this.cards.where({ archived: false }) });
   },
   search: function(query) {
     this.searchResults.set('query', query);
@@ -164,7 +169,7 @@ var App = {
     this.on('closeSearch', this.closeSearch);
     this.on('viewNotifications', this.displayNotifications);
     this.on('newComment', this.comments.addComment.bind(this.comments));
-    this.on('openSearch', this.displaySearch);
+    this.on('openSearch', this.displaySearch.bind(this));
     this.on('performSearch', this.search);
     this.listenTo(this.lists, 'add', this.renderBoard);
     this.listenTo(this.cards, 'change:dueDate change:listId change:archived', 
@@ -178,7 +183,6 @@ var App = {
     $('body').on('click', '.modal-overlay', this.closeModalByOverlay.bind(this));
   },
   init: function() {
-    this.searchResults = new Filter({ collection: this.cards.where({ archived: false }) });
     this.headerView = new HeaderView();
     this.bindEvents();
   }

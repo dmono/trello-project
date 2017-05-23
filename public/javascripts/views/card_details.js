@@ -136,6 +136,7 @@ var CardDetailsView = Backbone.View.extend({
   },
   deleteCard: function(e) {
     e.preventDefault();
+    console.log('delete me!');
     this.model.destroy({
       wait: true,
       success: function(model) {
@@ -148,7 +149,9 @@ var CardDetailsView = Backbone.View.extend({
     return App.lists.get(this.model.get('listId')).get('name');
   },
   renderComments: function() {
-    var comments = App.comments.where({ cardId: this.model.id });
+    var comments = App.comments.where({ cardId: this.model.id }).sort(function(a, b) {
+      return b.get('id') - a.get('id');
+    });
     var self = this;
     var commentView;
 

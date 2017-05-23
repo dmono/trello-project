@@ -1,6 +1,6 @@
 var HeaderView = Backbone.View.extend({
   template: App.templates.header,
-  el: $('#surface > header')[0],
+  el: $('#app-content > header')[0],
   events: {
     'click input[name="search"]': 'updateSearchField',
     'click .close-search': 'closeSearch',
@@ -27,11 +27,13 @@ var HeaderView = Backbone.View.extend({
     var offset = $(e.currentTarget).offset();
     var height = $(e.currentTarget).height();
 
-    if ($(e.currentTarget).val().length > 2 && $('.popover:hidden')) {
+    if ($(e.currentTarget).val().length > 2 && $('.search-modal').length === 0) {
       App.trigger('openSearch', offset, height);
     }
 
-    App.trigger('performSearch', e.currentTarget.value);
+    if ($('.search-modal').length > 0) {
+      App.trigger('performSearch', e.currentTarget.value);
+    }
   },
   updateSearchField: function(e) {
     var $field = $(e.currentTarget);

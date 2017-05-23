@@ -8,7 +8,7 @@ var Lists = Backbone.Collection.extend({
       position: this.where({ archived: false }).length + 1,
     }, {
       wait: true,
-      success: function() {
+      success: function(list) {
         App.trigger('listModified');
       },
     });

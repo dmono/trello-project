@@ -3,6 +3,7 @@ var ArchivePopoverView = PopoverView.extend({
   events: function() {
     return _.extend({}, PopoverView.prototype.events, {
       'click .send-to-board': 'sendToBoard',
+      'click .archived-cards': 'goToCard',
     });
   },
   sendToBoard: function(e) {
@@ -10,6 +11,9 @@ var ArchivePopoverView = PopoverView.extend({
     var listId = $(e.currentTarget).attr('data-id');
 
     App.trigger('unarchiveList', listId);
+    this.close();
+  },
+  goToCard: function() {
     this.close();
   },
   renderCard: function(card) {

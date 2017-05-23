@@ -12,11 +12,11 @@ body, html, textarea, input[type='text']
   font: normal 14px Helvetica, Arial, sans-serif
   color: #4D4D4D
 
-#surface
+#app-content
   display: flex
   flex-direction: column
 
-body, #surface, html
+body, #app-content, html
   height: 100%
 
 a
@@ -101,7 +101,6 @@ header
     background: #EB5A46
     &:hover
       background: #B04632 
-    
 
 main
   position: relative
@@ -600,12 +599,18 @@ main
     background: #EB5A46
     &:hover
       background: #B04632
+  .disabled-btn
+    background: #EEEEEE
+    &:hover
+      background: #EEEEEE
+      color: #4D4D4D
+      span
+        color: #999999
 
 .markdown
   h1
     font-size: 20px
 
-    
 .popover
   position: absolute
   width: 300px
