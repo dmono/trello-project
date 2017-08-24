@@ -10,6 +10,8 @@ var nib = require('nib');
 var index = require('./routes/router');
 var app = express();
 
+var port = process.env.PORT || 8000;
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
